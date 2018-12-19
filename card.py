@@ -6,8 +6,7 @@ class Card:
 		self.number = n
 		self.suit = s
 
-
-	def __str__(self):
+	#def __str__(self):
 
 
 
@@ -18,6 +17,11 @@ class Deck:
 		for suit in Card.suits:
 			for i in range(1, 14):
 				self.deck.append(Card(i, suit))
+	def shuffle(self):
+		
+
+	def getnextcard(self):
+
 
 	def __repr__(self):
 		return "This is a deck of cards!"
