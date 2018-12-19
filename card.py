@@ -21,7 +21,9 @@ class Deck:
 		
 
 	def getnextcard(self):
-
+		temp = self.deck[0]
+		del self.deck[0]
+		return temp
 
 	def __repr__(self):
 		return "This is a deck of cards!"
