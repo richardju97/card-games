@@ -1,6 +1,6 @@
 # card.py
 
-from random import randomint
+from random import randint
 
 class Card:
 	suits = ["Clubs", "Diamonds", "Hearts", "Spades"]
