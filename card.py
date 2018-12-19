@@ -8,4 +8,16 @@ class Card:
 
 
 	def __str__(self):
-			
+
+
+
+class Deck:
+
+	def __init__(self):
+		self.deck = []
+		for suit in Card.suits:
+			for i in range(1, 14):
+				self.deck.append(Card(i, suit))
+
+	def __repr__(self):
+		return "This is a deck of cards!"
