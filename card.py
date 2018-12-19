@@ -25,5 +25,8 @@ class Deck:
 		del self.deck[0]
 		return temp
 
+	def addcard(self, c):
+		self.deck.append(c)	
+
 	def __repr__(self):
 		return "This is a deck of cards!"
