@@ -1,5 +1,7 @@
 # card.py
 
+from random import randomint
+
 class Card:
 	suits = ["Clubs", "Diamonds", "Hearts", "Spades"]
 	def __init__(self, n, s):
@@ -18,8 +20,13 @@ class Deck:
 			for i in range(1, 14):
 				self.deck.append(Card(i, suit))
 	def shuffle(self):
-		
-
+		temp = []
+		while (len(self.deck) > 0):
+			r = randint(0, len(self.deck) -1)	
+			temp.append(self.deck[r])
+			del self.deck[r]
+		self.deck = temp
+						
 	def getnextcard(self):
 		temp = self.deck[0]
 		del self.deck[0]
