@@ -8,8 +8,17 @@ class Card:
 		self.number = n
 		self.suit = s
 
-	#def __str__(self):
-
+	def __str__(self):
+		val = self.number
+		if self.number == 1:
+			val = "Ace"
+		if self.number == 11:
+			val = "Jack"
+		if self.number == 12:
+			val = "Queen"
+		if self.number == 13:
+			val = "King"
+		return str(val) + " of " + self.suit
 
 
 class Deck:
@@ -22,18 +31,20 @@ class Deck:
 	def shuffle(self):
 		temp = []
 		while (len(self.deck) > 0):
-			r = randint(0, len(self.deck) -1)	
+			r = randint(0, len(self.deck) -1)
 			temp.append(self.deck[r])
 			del self.deck[r]
 		self.deck = temp
-						
+
 	def getnextcard(self):
 		temp = self.deck[0]
 		del self.deck[0]
 		return temp
 
 	def addcard(self, c):
-		self.deck.append(c)	
+		self.deck.append(c)
 
 	def __repr__(self):
 		return "This is a deck of cards!"
+
+	def shuffle(self):
