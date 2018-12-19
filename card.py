@@ -6,9 +6,17 @@ class Card:
 		self.number = n
 		self.suit = s
 
-
 	def __str__(self):
-
+		val = self.number
+		if self.number == 1:
+			val = "Ace"
+		if self.number == 11:
+			val = "Jack"
+		if self.number == 12:
+			val = "Queen"
+		if self.number == 13:
+			val = "King"
+		return str(val) + " of " + self.suit
 
 
 class Deck:
@@ -21,3 +29,5 @@ class Deck:
 
 	def __repr__(self):
 		return "This is a deck of cards!"
+
+	def shuffle(self):
