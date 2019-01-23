@@ -15,6 +15,9 @@ class Player:
             return card
         return self.cards.pop()
 
+    def addtohand(self, card):
+        self.cards.append(card)
+    
     def gethand(self, can_see_cards=False):
         if can_see_cards:
             return self.cards
