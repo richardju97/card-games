@@ -47,10 +47,21 @@ class BlackJack(Game):
         calcscores(player)
 
     def calcscores(self, player):
-        temp = 0
+        
+        player.gethand().sort(key=lambda Card: Card.number, reverse=True)
+        
+        tempscore = 0
         for card in player.gethand():
-            temp += card.getnumber()
-        self.score = temp
+            temp = card.getnumber()
+            
+            if (temp == 1):
+            
+            elif (temp >= 10):
+                temp = 10
+            
+            tempscore += temp
+        
+        self.score = tempscore
 
     def calcallscores(self):
         for p in self.players:

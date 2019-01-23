@@ -1,8 +1,8 @@
 class Player:
 
-    def __init__(self, name, cards=None):
+    def __init__(self, name):
         self.name = name
-        self.cards = cards
+        self.cards = []
 
     def __str__(self):
         return self.name + "\nCards: " + self.cards
