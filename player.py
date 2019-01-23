@@ -18,7 +18,7 @@ class Player:
     def addtohand(self, card):
         self.cards.append(card)
     
-    def gethand(self, can_see_cards=False):
-        if can_see_cards:
-            return self.cards
-        return "Access denied"
+    def gethand(self):
+#        if can_see_cards:
+        return self.cards
+#        return "Access denied"
