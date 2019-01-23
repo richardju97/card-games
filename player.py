@@ -8,16 +8,14 @@ class Player:
         return self.name + "\nCards: " + self.cards
 
     def draw(self, deck):
-        self.cards.append(deck.pop())
+        self.cards.append(deck.getnextcard())
 
     def play(self, card=None):
         if card:
             return card
         return self.cards.pop()
 
-    def get_hand(self, can_see_cards=False):
+    def gethand(self, can_see_cards=False):
         if can_see_cards:
             return self.cards
         return "Access denied"
-
-    
