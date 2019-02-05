@@ -6,8 +6,13 @@ from card import Deck
 
 class BlackJackPlayer(Player):
 
-    def __init__(self):
+    def __init__(self, name):
         self.score = 0
+#        self.name = name
+        Player.__init__(self, name)
+
+    def getscore(self):
+        return self.score
 
 class BlackJack(Game):
 
@@ -16,15 +21,22 @@ class BlackJack(Game):
 
     def newplayer(self, name):
         self.num_players += 1
-        self.players.append(BlackJackPlayer(name))
+        temp = BlackJackPlayer(name)
+        self.players.append(temp)
+        print("Welcome to BlackJack, " + name + "!")
+        return temp
     
     def start(self):
         self.deal(2)
+        self.calcallscores()
 
 #    def turn(self, player):
+    def stand(self, player):
+        self.calcscores(player)
+
     def hit(self, player):
         player.addtohand(self.deck.getnextcard())
-        calcscores(player)
+        self.calcscores(player)
 
     def calcscores(self, player):
         
@@ -46,11 +58,11 @@ class BlackJack(Game):
             
             tempscore += temp
         
-        self.score = tempscore
+        player.score = tempscore
 
     def calcallscores(self):
         for p in self.players:
-            calcscores(p)
+            self.calcscores(p)
 
 #    def end(self):
 

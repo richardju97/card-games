@@ -8,8 +8,8 @@ class Card:
 		self.number = n
 		self.suit = s
 
-#    def getnumber(self):
-#        return self.number
+	def getnumber(self):
+		return self.number
 
 	def __str__(self):
 		val = self.number
@@ -49,6 +49,18 @@ class Deck:
 
 	def __repr__(self):
 		return "This is a deck of cards!"
+	
+	def notempty(self):
+		if(len(self.deck) > 0):
+			return True
+		else:
+			return False
+	
+#    def notempty(self):
+#        if(len(self.deck) > 0):
+#            return True
+#        else
+#            return False
 
 #    def notempty(self):
 #        if (len(self.deck) > 0):
