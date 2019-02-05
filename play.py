@@ -15,7 +15,10 @@ while (playing):
     print("Your current score is: " + str(myplayer.getscore()))
     for mycard in myplayer.cards:
         print(mycard)
-    
+
+# edge case: what if player holds an ace and a small card
+# ceiling will be higher than it should because we can reduce the entire score by 10    
+
     ceiling = 22 - myplayer.getscore()
     decksize = 52 - len(myplayer.cards)
     adjust = 0
