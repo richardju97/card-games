@@ -39,6 +39,23 @@ class ProbabilityThresholdBlackJackPlayer(BlackJackPlayer):
         else:
             return 2 # probability of losing is less than threshold
 
+class PerceptronBlackJackPlayer(BlackJackPlayer): 
+
+    threshold =  0.5 # threshold. Max value = 2 if weights are all 1
+
+    # Weights
+    score_weight = 0.8 # Score is on a scale of 0 - 1
+    probability_weight = 0.2 # Probability of losing is on a scale of 0 - 1
+
+    # Stand = 1
+    # Hit = 2
+    def getMove(self, p):
+        # Current activiation function is basic threshold function
+        if ( self.getscore() /  21 * score_weight + p * probability_weight > self.threshold):
+            return 1 # probability of losing is too great
+        else:
+            return 2 # probability of losing is less than threshold
+
 
 
 
