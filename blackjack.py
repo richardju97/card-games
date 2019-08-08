@@ -7,9 +7,9 @@ from card import Deck
 class BlackJackPlayer(Player):
 
     def __init__(self, name):
-        self.score = 0
-#        self.name = name
         Player.__init__(self, name)
+        self.score = 0
+        self.ghostcards = 0
 
     def getscore(self):
         return self.score
