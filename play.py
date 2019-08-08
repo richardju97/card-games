@@ -36,7 +36,7 @@ while (playing):
     print("Probability of losing: " + str(probability * 100) + "%")
 
     print("Select an option:")
-    option = myplayer.getMove()
+    option = myplayer.getMove(probability)
 #    print(option)
 
     if (option == 1):

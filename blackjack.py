@@ -14,18 +14,32 @@ class BlackJackPlayer(Player):
     def getscore(self):
         return self.score
 
-    def getMove(self):
+    def getMove(self, p):
         return int(input("1. Stand \n2. Hit \n"))
 
 class GreedyBlackJackPlayer(BlackJackPlayer):
 
     # Stand = 1
     # Hit = 2
-    def getMove(self):
+    def getMove(self, p):
         if (self.getscore() < 21):
             return 2 # Always hit if under 21
         else:
             return 1 # Stand if greater than 21? (the game will be over by then)
+
+class ProbabilityThresholdBlackJackPlayer(BlackJackPlayer):
+    
+    threshold = 0.8 # Probability threshold : if probability of losing > threshold, stand 
+
+    # Stand = 1
+    # Hit = 2
+    def getMove(self, p):
+        if (p > self.threshold):
+            return 1 # probability of losing is too great
+        else:
+            return 2 # probability of losing is less than threshold
+
+
 
 
 class BlackJack(Game):
@@ -35,7 +49,7 @@ class BlackJack(Game):
 
     def newplayer(self, name):
         self.num_players += 1
-        temp = GreedyBlackJackPlayer(name)
+        temp = ProbabilityThresholdBlackJackPlayer(name)
         self.players.append(temp)
         print("Welcome to BlackJack, " + name + "!")
         return temp
