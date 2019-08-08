@@ -14,6 +14,20 @@ class BlackJackPlayer(Player):
     def getscore(self):
         return self.score
 
+    def getMove(self):
+        return int(input("1. Stand \n2. Hit \n"))
+
+class GreedyBlackJackPlayer(BlackJackPlayer):
+
+    # Stand = 1
+    # Hit = 2
+    def getMove(self):
+        if (self.getscore() < 21):
+            return 2 # Always hit if under 21
+        else:
+            return 1 # Stand if greater than 21? (the game will be over by then)
+
+
 class BlackJack(Game):
 
     def __init__(self, n, d):
@@ -21,7 +35,7 @@ class BlackJack(Game):
 
     def newplayer(self, name):
         self.num_players += 1
-        temp = BlackJackPlayer(name)
+        temp = GreedyBlackJackPlayer(name)
         self.players.append(temp)
         print("Welcome to BlackJack, " + name + "!")
         return temp

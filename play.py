@@ -36,7 +36,7 @@ while (playing):
     print("Probability of losing: " + str(probability * 100) + "%")
 
     print("Select an option:")
-    option = int(input("1. Stand \n2. Hit \n"))
+    option = myplayer.getMove()
 #    print(option)
 
     if (option == 1):
@@ -48,7 +48,7 @@ while (playing):
     else:
         print("Please select a valid option!")
     
-    if (myplayer.getscore() > 21):
+    if (myplayer.getscore() >= 21):
         playing = False
 
 for mycard in myplayer.cards:
@@ -56,5 +56,7 @@ for mycard in myplayer.cards:
 
 if (myplayer.getscore() > 21):
     print("You lose")
+elif (myplayer.getscore() == 21):
+    print("Congrats, you win!")
 else:
     print("Final Score: " + str(myplayer.getscore()))
