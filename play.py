@@ -6,7 +6,8 @@ from card import Deck
 mydeck = Deck()
 mydeck.shuffle()
 bjgame = BlackJack(1, mydeck)
-myplayer = bjgame.newplayer("Richard")
+name = input("What is your name? ") #Prompts the user for a name
+myplayer = bjgame.newplayer(name)
 bjgame.start()
 
 playing = True
