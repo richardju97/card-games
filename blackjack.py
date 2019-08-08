@@ -64,14 +64,27 @@ class BlackJack(Game):
     def __init__(self, n, d):
         Game.__init__(self, num_players=n, deck=d)
 
-    def newplayer(self, name):
+
+    # type parameter: 0 = blackjack player , 1 = greedy blackjack player, 2 = probability threshold player, 
+    # 3 = perceptron
+    def newplayer(self, name, type=0):
         self.num_players += 1
-        temp = ProbabilityThresholdBlackJackPlayer(name)
+
+        if (type == 0):
+            temp = BlackJackPlayer(name)
+        elif (type == 1):
+            temp = GreedyBlackJackPlayer(name)
+        elif (type == 2):
+            temp = ProbabilityThresholdBlackJackPlayer(name)
+        else:
+            temp = PerceptronBlackJackPlayer(name)
+
         self.players.append(temp)
-        print("Welcome to BlackJack, " + name + "!")
         return temp
     
     def start(self):
+        for p in self.players:
+            print("Welcome to BlackJack, " + p.name + "!")
         self.deal(2)
         self.calcallscores()
 
