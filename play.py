@@ -5,26 +5,34 @@ from card import Deck
 
 mydeck = Deck()
 mydeck.shuffle()
+
+#Player initialization
 bjgame = BlackJack(2, mydeck)
 name = input("What is your name? ") #Prompts the user for a name
 myplayer = bjgame.newplayer(name, 0)
 
+#AI initialization
 print("What type of AI would you like to play against? ") # Select AI type
 ai_type = int(input("1. Greedy AI \n2. Probability AI \n3. Perceptron \n"))
-ai_name = input("What is the name of your AI?")
-ai = bjgame.newplayer(ai_name, ai_type)
+ai = bjgame.newplayer("AI", ai_type)
 
 players = [myplayer, ai]
 
 bjgame.start()
 
+# Goes through each turn for each of the players (PLAYER PHASE)
 for p in players:
+
     playing = True
+
     while (playing):
 
+        print("---------------------------")
         print(p.name + ", your current score is: " + str(p.getscore()))
+        print("---------------------------")
         for mycard in p.cards:
             print(mycard)
+        print("---------------------------")
 
     # edge case: what if player holds an ace and a small card
     # ceiling will be higher than it should because we can reduce the entire score by 10    
@@ -64,14 +72,18 @@ for p in players:
         print(mycard)
 
     if (p.getscore() > 21):
-        print("You lose")
+        print("You lose!")
     elif (p.getscore() == 21):
         print("Congrats, " + p.name + " you win!")
-        break
     else:
         print("Final Score: " + str(p.getscore()))
+
+    print("***************************")
 
 print("Final Scores: \n")
 for p in players:
     print(p.name + " " + str(p.getscore()))
- 
+
+# DEALER PHASE
+bjgame.startdealer()
+
