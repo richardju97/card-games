@@ -22,3 +22,6 @@ class Player:
 #        if can_see_cards:
         return self.cards
 #        return "Access denied"
+    
+    def getMove(self):
+        return int(input("1. Stand \n2. Hit \n"))

@@ -3,6 +3,7 @@
 from player import Player
 from game import Game
 from card import Deck
+import time
 
 class BlackJackPlayer(Player):
 
@@ -14,21 +15,115 @@ class BlackJackPlayer(Player):
     def getscore(self):
         return self.score
 
+    def getMove(self, p):
+        return int(input("1. Stand \n2. Hit \n"))
+
+class GreedyBlackJackPlayer(BlackJackPlayer):
+
+    # Stand = 1
+    # Hit = 2
+    def getMove(self, p):
+        time.sleep(2)
+        if (self.getscore() < 21):
+            return 2 # Always hit if under 21
+        else:
+            return 1 # Stand if greater than 21? (the game will be over by then)
+
+class ProbabilityThresholdBlackJackPlayer(BlackJackPlayer):
+    
+    threshold = 0.8 # Probability threshold : if probability of losing > threshold, stand 
+
+    # Stand = 1
+    # Hit = 2
+    def getMove(self, p):
+        time.sleep(2)
+        if (p > self.threshold):
+            return 1 # probability of losing is too great
+        else:
+            return 2 # probability of losing is less than threshold
+
+class PerceptronBlackJackPlayer(BlackJackPlayer): 
+
+    threshold =  0.5 # threshold. Max value = 2 if weights are all 1
+
+    # Weights
+    score_weight = 0.8 # Score is on a scale of 0 - 1
+    probability_weight = 0.2 # Probability of losing is on a scale of 0 - 1
+
+    # Stand = 1
+    # Hit = 2
+    def getMove(self, p):
+        time.sleep(2)
+        # Current activiation function is basic threshold function
+        if ( self.getscore() /  21 * score_weight + p * probability_weight > self.threshold):
+            return 1 # probability of losing is too great
+        else:
+            return 2 # probability of losing is less than threshold
+
+class Dealer(BlackJackPlayer):
+
+    def __init__(self, name):
+        self.can_see_second_card = False
+        BlackJackPlayer.__init__(self, name)
+
+    #Overrides the 
+    def gethand(self):
+        if self.can_see_second_card:
+            return self.cards
+        else:
+            return self.cards[0]
+
+
+
+
+
 class BlackJack(Game):
 
     def __init__(self, n, d):
         Game.__init__(self, num_players=n, deck=d)
+        self.dealer = Dealer("Dealer") #initializes a dealer for every game.
+        for i in range(2): #Adds two cards to dealer's hands
+            self.dealer.addtohand(self.deck.getnextcard())
 
-    def newplayer(self, name):
+
+    # type parameter: 0 = blackjack player , 1 = greedy blackjack player, 2 = probability threshold player, 
+    # 3 = perceptron, 4 = Dealer
+    def newplayer(self, name, type=0):
         self.num_players += 1
-        temp = BlackJackPlayer(name)
+
+        if (type == 0):
+            #print("Normal player initialized!")
+            temp = BlackJackPlayer(name)
+        elif (type == 1):
+            #print("Greedy AI Initialized!")
+            temp = GreedyBlackJackPlayer(name)
+        elif (type == 2):
+            temp = ProbabilityThresholdBlackJackPlayer(name)
+        elif (type == 3):
+            temp = PerceptronBlackJackPlayer(name)
+        else:
+            #print("Dealer initialized!")
+            temp = Dealer(name)
+
         self.players.append(temp)
-        print("Welcome to BlackJack, " + name + "!")
         return temp
     
     def start(self):
+        for p in self.players:
+            print("Welcome to BlackJack, " + p.name + "!")
+        print("******** GAME START ********")
         self.deal(2)
         self.calcallscores()
+        # Shows the first card of the dealer's hand 
+        print("The first card in the dealer's hand is: " + str(self.dealer.gethand()))
+
+    def startdealer(self):
+        print("***************************")
+        self.dealer.can_see_second_card = True
+        print("The dealer's full hand was: ")
+        for card in self.dealer.gethand():
+            print(card)
+
 
 #    def turn(self, player):
     def stand(self, player):

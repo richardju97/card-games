@@ -5,56 +5,85 @@ from card import Deck
 
 mydeck = Deck()
 mydeck.shuffle()
-bjgame = BlackJack(1, mydeck)
+
+#Player initialization
+bjgame = BlackJack(2, mydeck)
 name = input("What is your name? ") #Prompts the user for a name
-myplayer = bjgame.newplayer(name)
+myplayer = bjgame.newplayer(name, 0)
+
+#AI initialization
+print("What type of AI would you like to play against? ") # Select AI type
+ai_type = int(input("1. Greedy AI \n2. Probability AI \n3. Perceptron \n"))
+ai = bjgame.newplayer("AI", ai_type)
+
+players = [myplayer, ai]
+
 bjgame.start()
 
-playing = True
-while (playing):
+# Goes through each turn for each of the players (PLAYER PHASE)
+for p in players:
 
-    print("Your current score is: " + str(myplayer.getscore()))
-    for mycard in myplayer.cards:
+    playing = True
+
+    while (playing):
+
+        print("---------------------------")
+        print(p.name + ", your current score is: " + str(p.getscore()))
+        print("---------------------------")
+        for mycard in p.cards:
+            print(mycard)
+        print("---------------------------")
+
+    # edge case: what if player holds an ace and a small card
+    # ceiling will be higher than it should because we can reduce the entire score by 10    
+
+        ceiling = 22 - p.getscore()
+        decksize = 52 - len(p.cards)
+        adjust = 0
+
+        for mycard in p.cards:
+            if (mycard.getnumber() >= ceiling):
+                adjust += 1
+
+        if (ceiling >= 11):
+            probability = 0
+        else:
+            probability = ((13 - ceiling + 1.0) * 4 - adjust) / decksize
+
+        print("Probability of losing: " + str(probability * 100) + "%")
+
+        #("Select an option:")
+        option = p.getMove(probability)
+    #    print(option)
+
+        if (option == 1):
+            bjgame.stand(p)
+            playing = False
+        elif (option == 2):
+            bjgame.hit(p)
+            print("Updated Score: " + str(p.getscore()))
+        else:
+            print("Please select a valid option!")
+        
+        if (p.getscore() >= 21):
+            playing = False
+
+    for mycard in p.cards:
         print(mycard)
 
-# edge case: what if player holds an ace and a small card
-# ceiling will be higher than it should because we can reduce the entire score by 10    
-
-    ceiling = 22 - myplayer.getscore()
-    decksize = 52 - len(myplayer.cards)
-    adjust = 0
-
-    for mycard in myplayer.cards:
-        if (mycard.getnumber() >= ceiling):
-            adjust += 1
-
-    if (ceiling >= 11):
-        probability = 0
+    if (p.getscore() > 21):
+        print("You lose!")
+    elif (p.getscore() == 21):
+        print("Congrats, " + p.name + " you win!")
     else:
-        probability = ((13 - ceiling + 1.0) * 4 - adjust) / decksize
+        print("Final Score: " + str(p.getscore()))
 
-    print("Probability of losing: " + str(probability * 100) + "%")
+    print("***************************")
 
-    print("Select an option:")
-    option = int(input("1. Stand \n2. Hit \n"))
-#    print(option)
+print("Final Scores: \n")
+for p in players:
+    print(p.name + " " + str(p.getscore()))
 
-    if (option == 1):
-        bjgame.stand(myplayer)
-        playing = False
-    elif (option == 2):
-        bjgame.hit(myplayer)
-        print("Updated Score: " + str(myplayer.getscore()))
-    else:
-        print("Please select a valid option!")
-    
-    if (myplayer.getscore() > 21):
-        playing = False
+# DEALER PHASE
+bjgame.startdealer()
 
-for mycard in myplayer.cards:
-    print(mycard)
-
-if (myplayer.getscore() > 21):
-    print("You lose")
-else:
-    print("Final Score: " + str(myplayer.getscore()))
