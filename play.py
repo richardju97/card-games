@@ -85,45 +85,37 @@ for p in players:
 print("Final Scores: \n")
 for p in players:
     print(p.name + " " + str(p.getscore()))
-    if (p.getscore() > 21):
-        players.remove(p) #Removes all the players that are out of the game because they have a score > 21
+
 
 ########### DEALER PHASE ############
-bjgame.startdealer()
-playing = True
-
-while(playing): # Dealer plays 
-    option = bjgame.dealer.getMove(0)
-    if (option == 1):
-        bjgame.stand(bjgame.dealer)
-        playing = False
-    elif (option == 2):
-        bjgame.hit(bjgame.dealer)
-        print("Updated Score: " + str(bjgame.dealer.getscore()))
-    else:
-        print("Please select a valid option!")
+dealerscore = bjgame.startdealer()
 
 print("***************************")
+print("Dealer's Final cards: ")
 for mycard in bjgame.dealer.cards:
     print(mycard)
-print("Final Score:")
-print(str(bjgame.dealer.getscore()))
+print("Dealer's Final Score:")
+print(str(dealerscore))
 
-if (bjgame.dealer.getscore() == 21): #If the dealer ends up with a 21
+if (dealerscore == 21): #If the dealer ends up with a 21
     print("The dealer wins!")
-elif (bjgame.dealer.getscore() > 21): # If dealer ends up with a score greater than 21
+elif (dealerscore > 21): # If dealer ends up with a score greater than 21
     print("The dealer busts!")
     for p in players:
         print("Congrats, " + p.name + " you win!")
 else:                                #If the dealer ends up with a score less than 21 and greater than 17
     for p in players:
-        if (p.getscore() > bjgame.dealer.getscore()):
-            print("Congrats, " + p.name + " you win! " + str(p.getscore()) + " is greater than " +
-                str(bjgame.dealer.getscore()))
-        elif (p.getscore() == bjgame.dealer.getscore()):
-            print(p.name + " you have tied with the dealer!")
+        if (p.getscore() <= 21):
+            if (p.getscore() > dealerscore):
+                print("Congrats, " + p.name + " you win! " + str(p.getscore()) + " is greater than " +
+                    str(dealerscore))
+            elif (p.getscore() == dealerscore):
+                print(p.name + " you have tied with the dealer!")
+            else:
+                print(p.name + " you lose! Your score of " + str(p.getscore()) + " is less than " + str(dealerscore))
         else:
-            print(p.name + " you lose! Your score of " + str(p.getscore()) + " is less than " + str(bjgame.dealer.getscore()))
+            print(p.name + ", you lose! Your score is greater than 21.")
+  
 
 
 
