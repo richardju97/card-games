@@ -1,6 +1,9 @@
 # card.py
 
+from random import seed
 from random import randint
+
+seed(10000)
 
 class Card:
 	suits = ["Clubs", "Diamonds", "Hearts", "Spades"]
