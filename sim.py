@@ -6,7 +6,7 @@ from card import Deck
 import random
 
 MAX_SIMS = 3
-simtype = "Test"
+simtype = 1
 
 verbose = 1
 
@@ -23,7 +23,7 @@ for simnum in range(MAX_SIMS):
     mydeck = Deck()
     mydeck.shuffle()
     bjgame = BlackJack(1, mydeck)
-    myplayer = bjgame.newplayer("Test Simulation #" + str(simnum + 1),1)
+    myplayer = bjgame.newplayer("Simulation #" + str(simnum+1),simtype)
     bjgame.start()
 
     myscore = 0
