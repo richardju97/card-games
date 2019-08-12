@@ -129,7 +129,6 @@ class BlackJack(Game):
 
 
     def startdealer(self):
-        print("***************************")
         print("The dealer's full hand was: ")
         for card in self.dealer.gethand():
             print(card)
@@ -143,8 +142,8 @@ class BlackJack(Game):
                 playing = False
             elif (option == 2):
                 self.hit(self.dealer)
-                print("Dealer hits!")
                 print("---------------------------")
+                print("Dealer hits!")
                 print("Updated Score: " + str(self.dealer.getscore()))
             else:
                 print("Please select a valid option!")

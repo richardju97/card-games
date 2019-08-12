@@ -3,7 +3,7 @@
 from random import seed
 from random import randint
 
-seed(102312)
+seed(32439238)
 
 class Card:
 	suits = ["Clubs", "Diamonds", "Hearts", "Spades"]
