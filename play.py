@@ -99,9 +99,9 @@ if (nonatural):
 
     if (dealerscore == 21): #If the dealer ends up with a 21
         for p in players:
-            if (p.getscore() == 21):
+            if (bjgame.comparescores(p.getscore()) == 0):
                 print(p.name + ", you tied with the dealer with a score of 21!")
-            elif (p.getscore() < 21):
+            elif (bjgame.comparescores(p.getscore()) == -1):
                 print(p.name + ", you lose! Your score of " + str(p.getscore()) + " is less than 21.")
 
     elif (dealerscore > 21): # If dealer ends up with a score greater than 21
@@ -109,13 +109,13 @@ if (nonatural):
         for p in players:
             if (p.getscore() <= 21):
                 print("Congrats, " + p.name + " you win!")
-    else:                                #If the dealer ends up with a score less than 21 and greater than 17
+    else:   #If the dealer ends up with a score less than 21 and greater than 17
         for p in players:
             if (p.getscore() <= 21):
-                if (p.getscore() > dealerscore):
+                if (bjgame.comparescores(p.getscore()) == 1):
                     print("Congrats, " + p.name + " you win! " + str(p.getscore()) + " is greater than " +
                         str(dealerscore))
-                elif (p.getscore() == dealerscore):
+                elif (bjgame.comparescores(p.getscore()) == 0):
                     print(p.name + " you have tied with the dealer!")
                 else:
                     print(p.name + " you lose! Your score of " + str(p.getscore()) + " is less than " + str(dealerscore))

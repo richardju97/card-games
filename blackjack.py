@@ -150,6 +150,15 @@ class BlackJack(Game):
 
         return self.dealer.getscore()
 
+    # compares the final score of the dealer to the player.
+    # returns -1 if playerscore is < dealer score, 0 if playerscore = dealer score, 1 if playerscore > dealerscore
+    def comparescores(self, playerscore):
+        if (self.dealer.getscore() < playerscore): 
+            return 1
+        elif (self.dealer.getscore() == playerscore):
+            return 0
+        else:
+            return -1
 
 #    def turn(self, player):
     def stand(self, player):
