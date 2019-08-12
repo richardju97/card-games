@@ -29,7 +29,7 @@ if (nonatural):
 
         #edge case: the player starts with a natural 21
         if (p.getscore() == 21):
-            print("Wow! You got a natural 21! Your turn will now end. ")
+            print("Wow! " + p.name + " got a natural 21! Your turn will now end. ")
             playing = False
 
         while (playing):
@@ -98,9 +98,12 @@ if (nonatural):
     print(str(dealerscore))
 
     if (dealerscore == 21): #If the dealer ends up with a 21
-        for p in p.players:
-            if(p.getscore() == 21):
+        for p in players:
+            if (p.getscore() == 21):
                 print(p.name + ", you tied with the dealer with a score of 21!")
+            elif (p.getscore() < 21):
+                print(p.name + ", you lose! Your score of " + str(p.getscore()) + " is less than 21.")
+
     elif (dealerscore > 21): # If dealer ends up with a score greater than 21
         print("The dealer busts!")
         for p in players:

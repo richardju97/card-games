@@ -129,7 +129,6 @@ class BlackJack(Game):
 
 
     def startdealer(self):
-        print("***************************")
         print("The dealer's full hand was: ")
         for card in self.dealer.gethand():
             print(card)
