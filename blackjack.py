@@ -50,6 +50,7 @@ class PerceptronBlackJackPlayer(BlackJackPlayer):
     score_weight = 0.8 # Score is on a scale of 0 - 1
     probability_weight = 0.2 # Probability of losing is on a scale of 0 - 1
 
+
     # Stand = 1
     # Hit = 2
     def getMove(self, p):
@@ -63,15 +64,7 @@ class PerceptronBlackJackPlayer(BlackJackPlayer):
 class Dealer(BlackJackPlayer):
 
     def __init__(self, name):
-        self.can_see_second_card = False
         BlackJackPlayer.__init__(self, name)
-
-    #Overrides the 
-    def gethand(self):
-        if self.can_see_second_card:
-            return self.cards
-        else:
-            return self.cards[0]
 
     # Stand = 1
     # Hit = 2
@@ -115,23 +108,31 @@ class BlackJack(Game):
 
         self.players.append(temp)
         return temp
-    
+
+
+    # Returns true if the dealer does not have a natural 21 else false if the dealer has a natural 21
     def start(self):
         for p in self.players:
             print("Welcome to BlackJack, " + p.name + "!")
         print("******** GAME START ********")
         self.deal(2)
         self.calcallscores()
+        self.calcscores(self.dealer)
         # Shows the first card of the dealer's hand
-        print("The first card in the dealer's hand is: " + str(self.dealer.gethand()))
+        print("The first card in the dealer's hand is: " + str(self.dealer.gethand()[0]))
+        # If the dealer has a natural 21
+        if (self.dealer.getscore() == 21):
+            print("The dealer has a natural 21! Players must also have a natural 21 to tie!")
+            return False
+        
+        return True
+
 
     def startdealer(self):
         print("***************************")
-        self.dealer.can_see_second_card = True
         print("The dealer's full hand was: ")
         for card in self.dealer.gethand():
             print(card)
-        self.calcscores(self.dealer)
         print("Dealer score: " + str(self.dealer.getscore()))
         
         playing = True
@@ -142,6 +143,7 @@ class BlackJack(Game):
                 playing = False
             elif (option == 2):
                 self.hit(self.dealer)
+                print("Dealer hits!")
                 print("---------------------------")
                 print("Updated Score: " + str(self.dealer.getscore()))
             else:
