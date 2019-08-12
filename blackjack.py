@@ -143,8 +143,8 @@ class BlackJack(Game):
                 playing = False
             elif (option == 2):
                 self.hit(self.dealer)
-                print("Dealer hits!")
                 print("---------------------------")
+                print("Dealer hits!")
                 print("Updated Score: " + str(self.dealer.getscore()))
             else:
                 print("Please select a valid option!")

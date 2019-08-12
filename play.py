@@ -87,10 +87,6 @@ if (nonatural):
 
         print("***************************")
 
-    # print("Final Scores: \n")
-    # for p in players:
-    #     print(p.name + " " + str(p.getscore()))
-
     ########### DEALER PHASE ############
     dealerscore = bjgame.startdealer()
 
@@ -102,7 +98,9 @@ if (nonatural):
     print(str(dealerscore))
 
     if (dealerscore == 21): #If the dealer ends up with a 21
-        print("The dealer wins!")
+        for p in p.players:
+            if(p.getscore() == 21):
+                print(p.name + ", you tied with the dealer with a score of 21!")
     elif (dealerscore > 21): # If dealer ends up with a score greater than 21
         print("The dealer busts!")
         for p in players:
@@ -120,13 +118,14 @@ if (nonatural):
                     print(p.name + " you lose! Your score of " + str(p.getscore()) + " is less than " + str(dealerscore))
             else:
                 print(p.name + ", you lose! Your score is greater than 21.") 
-
+    print("GAME END.")
 else: #IF the dealer has a natural 21, check to see if other players have natural 21
-     for p in players:
+    for p in players:
         if (p.getscore() == 21):
             print("Wow! " + p.name + " also got a natural 21! You tie with the dealer! ")
         else:
             print("You lose! " + p.name + " did not have a natural 21. ")
+    print("GAME END.")
 
   
 
