@@ -18,103 +18,116 @@ ai = bjgame.newplayer("AI", ai_type)
 
 players = [myplayer, ai]
 
-bjgame.start()
+nonatural = bjgame.start() #checks to see if the dealer has a natural 21 at the start of the game
 
+if (nonatural):
 
-############## PLAYER PHASE ################
-# Goes through each turn for each of the players (PLAYER PHASE)
-for p in players:
+    ############## PLAYER PHASE ################
+    for p in players:
 
-    playing = True
+        playing = True
 
-    while (playing):
+        #edge case: the player starts with a natural 21
+        if (p.getscore() == 21):
+            print("Wow! You got a natural 21! Your turn will now end. ")
+            playing = False
 
-        print("---------------------------")
-        print(p.name + ", your current score is: " + str(p.getscore()))
-        print("---------------------------")
+        while (playing):
+
+            print("---------------------------")
+            print(p.name + ", your current score is: " + str(p.getscore()))
+            print("---------------------------")
+            for mycard in p.cards:
+                print(mycard)
+            print("---------------------------")
+
+        # edge case: what if player holds an ace and a small card
+        # ceiling will be higher than it should because we can reduce the entire score by 10    
+
+            ceiling = 22 - p.getscore()
+            decksize = 52 - len(p.cards)
+            adjust = 0
+
+            for mycard in p.cards:
+                if (mycard.getnumber() >= ceiling):
+                    adjust += 1
+
+            if (ceiling >= 11):
+                probability = 0
+            else:
+                probability = ((13 - ceiling + 1.0) * 4 - adjust) / decksize
+
+            print("Probability of losing: " + str(probability * 100) + "%")
+
+            #("Select an option:")
+            option = p.getMove(probability)
+        #    print(option)
+
+            if (option == 1):
+                bjgame.stand(p)
+                playing = False
+            elif (option == 2):
+                bjgame.hit(p)
+                print("Updated Score: " + str(p.getscore()))
+            else:
+                print("Please select a valid option!")
+            
+            if (p.getscore() >= 21):
+                playing = False
+
         for mycard in p.cards:
             print(mycard)
-        print("---------------------------")
 
-    # edge case: what if player holds an ace and a small card
-    # ceiling will be higher than it should because we can reduce the entire score by 10    
-
-        ceiling = 22 - p.getscore()
-        decksize = 52 - len(p.cards)
-        adjust = 0
-
-        for mycard in p.cards:
-            if (mycard.getnumber() >= ceiling):
-                adjust += 1
-
-        if (ceiling >= 11):
-            probability = 0
+        if (p.getscore() > 21):
+            print("You lose! You are now out of the game!")
+        elif (p.getscore() == 21):
+            print("Congrats, " + p.name + " you got to 21!")
         else:
-            probability = ((13 - ceiling + 1.0) * 4 - adjust) / decksize
+            print("Final Score: " + str(p.getscore()))
 
-        print("Probability of losing: " + str(probability * 100) + "%")
+        print("***************************")
 
-        #("Select an option:")
-        option = p.getMove(probability)
-    #    print(option)
+    # print("Final Scores: \n")
+    # for p in players:
+    #     print(p.name + " " + str(p.getscore()))
 
-        if (option == 1):
-            bjgame.stand(p)
-            playing = False
-        elif (option == 2):
-            bjgame.hit(p)
-            print("Updated Score: " + str(p.getscore()))
-        else:
-            print("Please select a valid option!")
-        
-        if (p.getscore() >= 21):
-            playing = False
-
-    for mycard in p.cards:
-        print(mycard)
-
-    if (p.getscore() > 21):
-        print("You lose!")
-    elif (p.getscore() == 21):
-        print("Congrats, " + p.name + " you win!")
-    else:
-        print("Final Score: " + str(p.getscore()))
+    ########### DEALER PHASE ############
+    dealerscore = bjgame.startdealer()
 
     print("***************************")
+    print("Dealer's Final cards: ")
+    for mycard in bjgame.dealer.cards:
+        print(mycard)
+    print("Dealer's Final Score:")
+    print(str(dealerscore))
 
-print("Final Scores: \n")
-for p in players:
-    print(p.name + " " + str(p.getscore()))
-
-
-########### DEALER PHASE ############
-dealerscore = bjgame.startdealer()
-
-print("***************************")
-print("Dealer's Final cards: ")
-for mycard in bjgame.dealer.cards:
-    print(mycard)
-print("Dealer's Final Score:")
-print(str(dealerscore))
-
-if (dealerscore == 21): #If the dealer ends up with a 21
-    print("The dealer wins!")
-elif (dealerscore > 21): # If dealer ends up with a score greater than 21
-    print("The dealer busts!")
-    for p in players:
-        print("Congrats, " + p.name + " you win!")
-else:                                #If the dealer ends up with a score less than 21 and greater than 17
-    for p in players:
-        if (p.getscore() <= 21):
-            if (p.getscore() > dealerscore):
-                print("Congrats, " + p.name + " you win! " + str(p.getscore()) + " is greater than " +
-                    str(dealerscore))
-            elif (p.getscore() == dealerscore):
-                print(p.name + " you have tied with the dealer!")
+    if (dealerscore == 21): #If the dealer ends up with a 21
+        print("The dealer wins!")
+    elif (dealerscore > 21): # If dealer ends up with a score greater than 21
+        print("The dealer busts!")
+        for p in players:
+            if (p.getscore() <= 21):
+                print("Congrats, " + p.name + " you win!")
+    else:                                #If the dealer ends up with a score less than 21 and greater than 17
+        for p in players:
+            if (p.getscore() <= 21):
+                if (p.getscore() > dealerscore):
+                    print("Congrats, " + p.name + " you win! " + str(p.getscore()) + " is greater than " +
+                        str(dealerscore))
+                elif (p.getscore() == dealerscore):
+                    print(p.name + " you have tied with the dealer!")
+                else:
+                    print(p.name + " you lose! Your score of " + str(p.getscore()) + " is less than " + str(dealerscore))
             else:
-                print(p.name + " you lose! Your score of " + str(p.getscore()) + " is less than " + str(dealerscore))
+                print(p.name + ", you lose! Your score is greater than 21.") 
+
+else: #IF the dealer has a natural 21, check to see if other players have natural 21
+     for p in players:
+        if (p.getscore() == 21):
+            print("Wow! " + p.name + " also got a natural 21! You tie with the dealer! ")
         else:
-            print(p.name + ", you lose! Your score is greater than 21.")
+            print("You lose! " + p.name + " did not have a natural 21. ")
+
   
 
 
