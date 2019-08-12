@@ -6,15 +6,21 @@ from card import Deck
 import random
 
 MAX_SIMS = 3
-simtype = 1
+simbots = 2
+simtype = [1, 2]
+assert (simbots == len(simtype)), "Declared number of bots must be equal to number of selected bots"
 
 verbose = 1
 
 simnum = 0
 nwins = 0
 nloss = 0
-sum = 0
+sum = []
 results = []
+for i in range(0, simbots):
+    results.append([])
+    sum.append(0)
+print(results)
 
 for simnum in range(MAX_SIMS):
 #    print(simnum)
@@ -23,96 +29,117 @@ for simnum in range(MAX_SIMS):
     mydeck = Deck()
     mydeck.shuffle()
     bjgame = BlackJack(1, mydeck)
-    myplayer = bjgame.newplayer("Simulation #" + str(simnum+1),simtype)
+
+    myplayers = []
+    for i in range(0, simbots):
+        myplayers.append(bjgame.newplayer("Simulation #" + str(simnum+1) + " Bot Type " + str(simtype[i]),simtype[i]))
+
     bjgame.start()
 
-    myscore = 0
-    
-    playing = True
-    while (playing):
+#    myscore = 0
+    i = 0
+    for myplayer in myplayers:
+        playing = True
+        while (playing):
 
-        if (verbose):
-            print("Your current score is: " + str(myplayer.getscore()))
-            for mycard in myplayer.cards:
-                print(mycard)
+            if (verbose):
+                print("Your current score is: " + str(myplayer.getscore()))
+                for mycard in myplayer.cards:
+                    print(mycard)
 
 # edge case: what if player holds an ace and a small card
 # ceiling will be higher than it should because we can reduce the entire score by 10    
 
-        ceiling = 22 - myplayer.getscore()
-        decksize = 52 - len(myplayer.cards)
-        adjust = 0
+            ceiling = 22 - myplayer.getscore()
+            decksize = 52 - len(myplayer.cards)
+            adjust = 0
 
-        for mycard in myplayer.cards:
-            if (mycard.getnumber() >= ceiling):
-                adjust += 1
+            for mycard in myplayer.cards:
+                if (mycard.getnumber() >= ceiling):
+                    adjust += 1
 
-        if (ceiling >= 11):
-            probability = 0
-        else:
-            probability = ((13 - ceiling + 1.0) * 4 - adjust) / decksize
+            if (ceiling >= 11):
+                probability = 0
+            else:
+                probability = ((13 - ceiling + 1.0) * 4 - adjust) / decksize
+
+            if (verbose):
+                print("Probability of losing: " + str(probability * 100) + "%")
+
+            if (verbose):
+                print("Select an option:")
+    #        option = int(input("1. Stand \n2. Hit \n"))
+
+            option = myplayer.getMove(probability)
+
+#           option = random.randint(1, 3)
+            if (option == 1):
+                bjgame.stand(myplayer)
+                playing = False
+            elif (option == 2):
+                bjgame.hit(myplayer)
+                if (verbose):
+                    print("Updated Score: " + str(myplayer.getscore()))
+            else:
+                if (verbose):
+                    print("Please select a valid option!")
+
+            if (myplayer.getscore() > 21):
+                playing = False
 
         if (verbose):
-            print("Probability of losing: " + str(probability * 100) + "%")
+            for mycard in myplayer.cards:
+                print(mycard)
 
-        if (verbose):
-            print("Select an option:")
-#        option = int(input("1. Stand \n2. Hit \n"))
-
-        option = myplayer.getMove(probability)
-
-#        option = random.randint(1, 3)
-        if (option == 1):
-            bjgame.stand(myplayer)
-            playing = False
-        elif (option == 2):
-            bjgame.hit(myplayer)
-            if (verbose):
-                print("Updated Score: " + str(myplayer.getscore()))
-        else:
-            if (verbose):
-                print("Please select a valid option!")
+        bjgame.startdealer()
 
         if (myplayer.getscore() > 21):
-            playing = False
+            if (verbose):
+                print("You lose")
+            results[i].append(-1)
+            nloss += 1
+        else:
+            if (verbose):
+                print("Final Score: " + str(myplayer.getscore()))
+            results[i].append(myplayer.getscore())
+            nwins += 1
+            sum[i] += myplayer.getscore()
 
-    if (verbose):
-        for mycard in myplayer.cards:
-            print(mycard)
-
-    bjgame.startdealer()
-
-    if (myplayer.getscore() > 21):
         if (verbose):
-            print("You lose")
-        results.append(-1)
-        nloss += 1
-    else:
-        if (verbose):
-            print("Final Score: " + str(myplayer.getscore()))
-        results.append(myplayer.getscore())
-        nwins += 1
-        sum += myplayer.getscore()
+            print("")
 
-    if (verbose):
-        print("")
+        i += 1
 
-if (nwins + nloss != len(results)):
+totalresults = 0
+for i in range(0, len(results)):
+    totalresults += len(results[i])
+
+if (nwins + nloss != totalresults):
     print("")
     print("ERROR")
     print("")
 
 print("-----------------------------")
 print("Simulation Results")
-print("-----------------------------")
-print("Simulation Type: " + simtype)
-print("Games Played: " + str(MAX_SIMS))
-lossratio = (1.0 * nloss / len(results))
-winrate = 1 - lossratio
-print("Win Rate: " + str(winrate * 100) + "%")
-print("Total Score: " + str(sum))
-print("Average Score: " + str(1.0 * sum/nwins))
-print("-----------------------------")
+for i in range(0, simbots):
+    print("-----------------------------")
+    print("Bot Type: " + str(simtype[i]))
+    print("Games Played: " + str(MAX_SIMS))
+    w = 0
+    print(results[i])
+    for j in range(0, len(results[i])):
+        if (results[i][j] > 0):
+            w += 1
+    winrate = (1.0 * w) / len(results[i])
+#    lossratio = (1.0 * nloss / len(results[i]))
+#    winrate = 1 - lossratio
+    print("Win Rate: " + str(winrate * 100) + "%")
+    print("Total Score: " + str(sum[i]))
+    if (w != 0):
+        print("Average Score: " + str(1.0 * sum[i]/w))
+    else:
+        print("Average Score: N/A")
+    print("-----------------------------")
       
 print("")
 print("-----------------------------")
