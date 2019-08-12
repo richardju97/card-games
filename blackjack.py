@@ -55,7 +55,7 @@ class PerceptronBlackJackPlayer(BlackJackPlayer):
     def getMove(self, p):
         time.sleep(2)
         # Current activiation function is basic threshold function
-        if ( self.getscore() /  21 * score_weight + p * probability_weight > self.threshold):
+        if (self.getscore() /  21 * score_weight + p * probability_weight > self.threshold):
             return 1 # probability of losing is too great
         else:
             return 2 # probability of losing is less than threshold
@@ -72,6 +72,17 @@ class Dealer(BlackJackPlayer):
             return self.cards
         else:
             return self.cards[0]
+
+    # Stand = 1
+    # Hit = 2
+    def getMove(self, p):
+        time.sleep(2)
+
+        #Dealer's turn
+        if(self.getscore() >= 17):
+            return 1
+        else:
+            return 2
 
 
 
@@ -101,9 +112,6 @@ class BlackJack(Game):
             temp = ProbabilityThresholdBlackJackPlayer(name)
         elif (type == 3):
             temp = PerceptronBlackJackPlayer(name)
-        else:
-            #print("Dealer initialized!")
-            temp = Dealer(name)
 
         self.players.append(temp)
         return temp
@@ -123,6 +131,8 @@ class BlackJack(Game):
         print("The dealer's full hand was: ")
         for card in self.dealer.gethand():
             print(card)
+        self.calcscores(self.dealer)
+        print("Dealer score: " + str(self.dealer.getscore()))
 
 
 #    def turn(self, player):
