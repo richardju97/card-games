@@ -80,6 +80,8 @@ for simnum in range(MAX_SIMS):
         for mycard in myplayer.cards:
             print(mycard)
 
+    bjgame.startdealer()
+
     if (myplayer.getscore() > 21):
         if (verbose):
             print("You lose")
