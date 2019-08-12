@@ -5,10 +5,10 @@ from card import Deck
 
 import random
 
-MAX_SIMS = 100
+MAX_SIMS = 3
 simtype = "Test"
 
-verbose = 0
+verbose = 1
 
 simnum = 0
 nwins = 0
@@ -23,7 +23,7 @@ for simnum in range(MAX_SIMS):
     mydeck = Deck()
     mydeck.shuffle()
     bjgame = BlackJack(1, mydeck)
-    myplayer = bjgame.newplayer("Test Simulation #" + str(simnum + 1))
+    myplayer = bjgame.newplayer("Test Simulation #" + str(simnum + 1),1)
     bjgame.start()
 
     myscore = 0
@@ -58,8 +58,10 @@ for simnum in range(MAX_SIMS):
         if (verbose):
             print("Select an option:")
 #        option = int(input("1. Stand \n2. Hit \n"))
-        option = random.randint(1, 3)
 
+        option = myplayer.getMove(probability)
+
+#        option = random.randint(1, 3)
         if (option == 1):
             bjgame.stand(myplayer)
             playing = False
@@ -70,7 +72,7 @@ for simnum in range(MAX_SIMS):
         else:
             if (verbose):
                 print("Please select a valid option!")
-    
+
         if (myplayer.getscore() > 21):
             playing = False
 
