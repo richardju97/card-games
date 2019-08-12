@@ -5,7 +5,7 @@ from card import Deck
 
 import random
 
-MAX_SIMS = 3
+MAX_SIMS = 100
 simbots = 2
 simtype = [1, 2]
 assert (simbots == len(simtype)), "Declared number of bots must be equal to number of selected bots"
@@ -90,9 +90,12 @@ for simnum in range(MAX_SIMS):
         if (verbose):
             for mycard in myplayer.cards:
                 print(mycard)
+        i += 1
 
-        bjgame.startdealer()
-
+    dealerscore = bjgame.startdealer()
+#        print(dealerscore)
+    i = 0
+    for myplayer in myplayers:
         if (myplayer.getscore() > 21):
             if (verbose):
                 print("You lose")
