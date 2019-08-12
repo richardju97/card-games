@@ -122,7 +122,7 @@ class BlackJack(Game):
         print("******** GAME START ********")
         self.deal(2)
         self.calcallscores()
-        # Shows the first card of the dealer's hand 
+        # Shows the first card of the dealer's hand
         print("The first card in the dealer's hand is: " + str(self.dealer.gethand()))
 
     def startdealer(self):
@@ -133,6 +133,21 @@ class BlackJack(Game):
             print(card)
         self.calcscores(self.dealer)
         print("Dealer score: " + str(self.dealer.getscore()))
+        
+        playing = True
+        while(playing): # Dealer plays 
+            option = self.dealer.getMove(0)
+            if (option == 1):
+                self.stand(self.dealer)
+                playing = False
+            elif (option == 2):
+                self.hit(self.dealer)
+                print("---------------------------")
+                print("Updated Score: " + str(self.dealer.getscore()))
+            else:
+                print("Please select a valid option!")
+
+        return self.dealer.getscore()
 
 
 #    def turn(self, player):
