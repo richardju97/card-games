@@ -23,7 +23,7 @@ class GreedyBlackJackPlayer(BlackJackPlayer):
     # Stand = 1
     # Hit = 2
     def getMove(self, p):
-        time.sleep(2)
+#        time.sleep(2)
         if (self.getscore() < 21):
             return 2 # Always hit if under 21
         else:
@@ -36,7 +36,7 @@ class ProbabilityThresholdBlackJackPlayer(BlackJackPlayer):
     # Stand = 1
     # Hit = 2
     def getMove(self, p):
-        time.sleep(2)
+#        time.sleep(2)
         if (p > self.threshold):
             return 1 # probability of losing is too great
         else:
@@ -54,7 +54,7 @@ class PerceptronBlackJackPlayer(BlackJackPlayer):
     # Stand = 1
     # Hit = 2
     def getMove(self, p):
-        time.sleep(2)
+#        time.sleep(2)
         # Current activiation function is basic threshold function
         if (self.getscore() /  21 * score_weight + p * probability_weight > self.threshold):
             return 1 # probability of losing is too great
@@ -69,7 +69,7 @@ class Dealer(BlackJackPlayer):
     # Stand = 1
     # Hit = 2
     def getMove(self, p):
-        time.sleep(2)
+#        time.sleep(2)
 
         #Dealer's turn
         if(self.getscore() >= 17):
