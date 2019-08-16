@@ -92,7 +92,7 @@ class BlackJack(Game):
 
     # type parameter: 0 = blackjack player , 1 = greedy blackjack player, 2 = probability threshold player, 
     # 3 = perceptron, 4 = Dealer
-    def newplayer(self, name, type=0):
+    def newplayer(self, name, type=0, aux=0):
         self.num_players += 1
 
         if (type == 0):
