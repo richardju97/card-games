@@ -90,12 +90,18 @@ if (nonatural):
     ########### DEALER PHASE ############
     dealerscore = bjgame.startdealer()
 
+
+    ########### PRINT DEALER'S FINAL CARDS ############
+
     print("***************************")
     print("Dealer's Final cards: ")
     for mycard in bjgame.dealer.cards:
         print(mycard)
     print("Dealer's Final Score:")
     print(str(dealerscore))
+
+
+    ########### FINAL COMPARISON BETWEEN DEALER'S SCORE AND PLAYER'S SCORE ##########
 
     if (dealerscore == 21): #If the dealer ends up with a 21
         for p in players:
@@ -122,6 +128,8 @@ if (nonatural):
             else:
                 print(p.name + ", you lose! Your score is greater than 21.") 
     print("GAME END.")
+
+######## IF DEALER HAS A NATURAL 21 ###########
 else: #IF the dealer has a natural 21, check to see if other players have natural 21
     for p in players:
         if (p.getscore() == 21):
