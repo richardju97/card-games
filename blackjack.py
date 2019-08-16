@@ -31,13 +31,25 @@ class GreedyBlackJackPlayer(BlackJackPlayer):
 
 class ProbabilityThresholdBlackJackPlayer(BlackJackPlayer):
     
-    threshold = 0.8 # Probability threshold : if probability of losing > threshold, stand 
+    def __init__(self, name, t):
+        self._threshold = None
+        if (t == 0):
+            self._threshold = 0.8
+        else:
+            self._threshold = t
+        super(ProbabilityThresholdBlackJackPlayer, self).__init__(name)
 
+#    threshold = None
+#    if (t == 0):
+#        threshold = 0.8 # Probability threshold : if probability of losing > threshold, stand
+#    else:
+#        threshold = t
+#
     # Stand = 1
     # Hit = 2
     def getMove(self, p):
 #        time.sleep(2)
-        if (p > self.threshold):
+        if (p > self._threshold):
             return 1 # probability of losing is too great
         else:
             return 2 # probability of losing is less than threshold
@@ -102,7 +114,7 @@ class BlackJack(Game):
             #print("Greedy AI Initialized!")
             temp = GreedyBlackJackPlayer(name)
         elif (type == 2):
-            temp = ProbabilityThresholdBlackJackPlayer(name)
+            temp = ProbabilityThresholdBlackJackPlayer(name, aux)
         elif (type == 3):
             temp = PerceptronBlackJackPlayer(name)
 
