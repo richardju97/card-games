@@ -113,7 +113,10 @@ for simnum in range(MAX_SIMS):
         if (r == -1):
             if (verbose):
                 print("You Lose")
-            results[i].append(-1)
+            if (myplayer.getscore() <= 21):
+                results[i].append(-1)
+            else:
+                results[i].append(-2)
             nloss += 1
         elif (r == 1):
             if (verbose):
@@ -155,23 +158,30 @@ for i in range(0, simbots):
     w = 0
     t = 0
     l = 0
+    s = 0
     print(results[i])
     for j in range(0, len(results[i])):
         if (results[i][j] > 0):
             w += 1
+            s += 1
         elif(results[i][j] == 0):
             t += 1
+            s += 1
         else:
             l += 1
+            if (results[i][j] == -1):
+                s += 1
     winrate = (1.0 * w) / len(results[i])
     tierate = (1.0 * t) / len(results[i])
     lossrate = (1.0 * l) / len(results[i])
-    rates.append([winrate, tierate, lossrate])
+    survrate = (1.0 * s) / len(results[i])
+    rates.append([winrate, tierate, lossrate, survrate])
 #    lossratio = (1.0 * nloss / len(results[i]))
 #    winrate = 1 - lossratio
     print("Win Rate: " + str(winrate * 100) + "%")
     print("Tie Rate: " + str(tierate * 100) + "%")
     print("Loss Rate: " + str(lossrate * 100) + "%")
+    print("Survival Rate: " + str(survrate * 100) + "%")
     print("Total Score: " + str(sum[i]))
     if ((w + t) != 0):
         print("Average Score: " + str(1.0 * sum[i]/(w+t)))
