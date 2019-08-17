@@ -211,8 +211,14 @@ df = pd.DataFrame(rates, index=thresholds, columns=['winrate', 'tierate', 'lossr
 print(df)
 
 #lines = df.plot.line()
+a = plt.figure(1)
+sns.lineplot(data=df.loc[:,['winrate']], marker = 'o')
+plt.xticks(np.arange(0.1,1.1,step=0.1))
+
+b = plt.figure(2)
 sns.lineplot(data=df)
 plt.xticks(np.arange(0.1,1.1,step=0.1))
 plt.show()
+
 
 
