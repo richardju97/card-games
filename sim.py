@@ -3,14 +3,18 @@
 from blackjack import BlackJack
 from card import Deck
 
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+
 import random
 
-MAX_SIMS = 100
-simbots = 2
-simtype = [1, 2]
+MAX_SIMS = 10000
+simbots = 1
+simtype = [4]
 assert (simbots == len(simtype)), "Declared number of bots must be equal to number of selected bots"
 
-verbose = 1
+verbose = 0
 
 simnum = 0
 nwins = 0
@@ -23,13 +27,14 @@ for i in range(0, simbots):
     sum.append(0)
 print(results)
 
+
 for simnum in range(MAX_SIMS):
 #    print(simnum)
     if (verbose):
         print("")
     mydeck = Deck()
     mydeck.shuffle()
-    bjgame = BlackJack(1, mydeck)
+    bjgame = BlackJack(1, mydeck, 0)
 
     myplayers = []
     for i in range(0, simbots):
@@ -95,6 +100,7 @@ for simnum in range(MAX_SIMS):
 
     dealerscore = bjgame.startdealer()
 #        print(dealerscore)
+
     i = 0
     for myplayer in myplayers:
 #        if (myplayer.getscore() > 21):
@@ -178,5 +184,6 @@ print("-----------------------------")
 print("End Simulation")
 print("-----------------------------")
 print("")
+
 
 

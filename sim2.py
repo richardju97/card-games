@@ -2,6 +2,10 @@
 
 from blackjack import BlackJack
 from card import Deck
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import seaborn as sns
 
 import random
 
@@ -197,5 +201,18 @@ print("-----------------------------")
 print("End Simulation")
 print("-----------------------------")
 print("")
+
+
+### DATA VISUALIZATION ### 
+
+rates = np.asarray(rates)
+
+df = pd.DataFrame(rates, index=thresholds, columns=['winrate', 'tierate', 'lossrate', 'survrate'])
+print(df)
+
+#lines = df.plot.line()
+sns.lineplot(data=df)
+plt.xticks(np.arange(0.1,1.1,step=0.1))
+plt.show()
 
 

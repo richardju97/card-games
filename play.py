@@ -19,6 +19,9 @@ ai = bjgame.newplayer("AI", ai_type)
 players = [myplayer, ai]
 
 nonatural = bjgame.start() #checks to see if the dealer has a natural 21 at the start of the game
+for p in self.players:
+            print("Welcome to BlackJack, " + p.name + "!")
+        print("******** GAME START ********")
 
 if (nonatural):
 
