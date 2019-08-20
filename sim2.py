@@ -9,7 +9,7 @@ import seaborn as sns
 
 import random
 
-MAX_SIMS = 100
+MAX_SIMS = 1000
 simbots = 10
 simtype = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
 thresholds = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
@@ -211,11 +211,11 @@ df = pd.DataFrame(rates, index=thresholds, columns=['winrate', 'tierate', 'lossr
 print(df)
 
 #lines = df.plot.line()
-a = plt.figure(1)
+winrateonly = plt.figure(1)
 sns.lineplot(data=df.loc[:,['winrate']], marker = 'o')
 plt.xticks(np.arange(0.1,1.1,step=0.1))
 
-b = plt.figure(2)
+everything = plt.figure(2)
 sns.lineplot(data=df)
 plt.xticks(np.arange(0.1,1.1,step=0.1))
 plt.show()

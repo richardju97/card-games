@@ -119,7 +119,7 @@ class Dealer(BlackJackPlayer):
         else:
             return 2
 
-    def getfirstcard(self, p):
+    def getfirstcard(self):
         return self.cards[0]
 
 
@@ -168,7 +168,7 @@ class BlackJack(Game):
 
         self.deal(2)
         self.calcallscores()
-        self.calcscores(self.dealer)
+        self.calcscores(self.dealer, False)
 
         if (self.verbose):
             # Shows the first card of the dealer's hand
@@ -208,6 +208,9 @@ class BlackJack(Game):
 
         return self.dealer.getscore()
 
+    def getdealerfirstcard(self):
+        return self.dealer.getfirstcard()
+
     # compares the final score of the dealer to the player.
     # returns -1 if playerscore is < dealer score, 0 if playerscore = dealer score, 1 if playerscore > dealerscore
     def comparescores(self, playerscore):
@@ -225,16 +228,17 @@ class BlackJack(Game):
 
 #    def turn(self, player):
     def stand(self, player):
-        self.calcscores(player)
+        self.calcscores(player, True)
 
     def hit(self, player):
         player.addtohand(self.deck.getnextcard())
-        self.calcscores(player)
+        self.calcscores(player, True)
 
-    def calcscores(self, player):
+    def calcscores(self, player, sort):
         
         hand = player.gethand()
-        hand.sort(key=lambda Card: Card.number, reverse=True)
+        if (sort):
+            hand.sort(key=lambda Card: Card.number, reverse=True)
         
         tempscore = 0
         for i in range(0, len(hand)):
@@ -255,7 +259,7 @@ class BlackJack(Game):
 
     def calcallscores(self):
         for p in self.players:
-            self.calcscores(p)
+            self.calcscores(p, True)
 
 #    def end(self):
 

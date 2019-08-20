@@ -6,6 +6,7 @@ from card import Deck
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
+import seaborn as sns
 
 import random
 
@@ -26,6 +27,41 @@ for i in range(0, simbots):
     results.append([])
     sum.append(0)
 print(results)
+
+#Keeps track of all the dealer starting values
+dstart = []
+
+#Keeps track of all the dealer ending values
+dend = []
+
+
+#dictionary keeping track of the value of the card the dealer shows, keeps track of how many times it appears
+d1 = {
+    1 : 0,
+    2 : 0,
+    3 : 0,
+    4 : 0,
+    5 : 0,
+    6 : 0,
+    7 : 0,
+    8 : 0,
+    9 : 0,
+    10 : 0
+}
+
+#dictionary keeping track of the value of the card the dealer shows, keeps track of how many times the dealer busts with starting value of that card
+d2 = {
+    1 : 0,
+    2 : 0,
+    3 : 0,
+    4 : 0,
+    5 : 0,
+    6 : 0,
+    7 : 0,
+    8 : 0,
+    9 : 0,
+    10 : 0
+}
 
 
 for simnum in range(MAX_SIMS):
@@ -98,7 +134,16 @@ for simnum in range(MAX_SIMS):
                 print(mycard)
         i += 1
 
+    dealerfirstcard = bjgame.getdealerfirstcard().getnumber()
+    if (dealerfirstcard > 10):
+        dealerfirstcard = 10
+    dstart.append(dealerfirstcard)
+    d1[dealerfirstcard] = d1[dealerfirstcard] + 1
     dealerscore = bjgame.startdealer()
+    dend.append(dealerscore)
+    if (dealerscore > 21):
+        d2[dealerfirstcard] = d2[dealerfirstcard] + 1
+
 #        print(dealerscore)
 
     i = 0
@@ -178,12 +223,39 @@ for i in range(0, simbots):
     else:
         print("Average Score: N/A")
     print("-----------------------------")
+
+    print("Probability the dealer busts given first card value: ")
+
+    bustprobabilities = []
+    for key in d1.keys():
+        print(str(key) + ": " + str(d2[key]/d1[key]))
+        bustprobabilities.append(d2[key]/d1[key])
       
 print("")
 print("-----------------------------")
 print("End Simulation")
 print("-----------------------------")
 print("")
+
+a = np.asarray(bustprobabilities)
+
+df = pd.DataFrame(a, index=[1,2,3,4,5,6,7,8,9,10], columns=['bust probability'])
+print(df)
+
+def helper(value):
+    if (value > 21):
+        return 'bust'
+    else:
+        return 'no bust'
+
+b = [dstart, dend]
+c = np.asarray(b)
+c = np.swapaxes(c,0,1)
+df2 = pd.DataFrame(c, columns = ['dealer starting value', 'dealer ending score'])
+df2['bust outcome'] = df2['dealer ending score'].apply(helper)
+# print(df2)
+sns.countplot(x='dealer starting value', hue='bust outcome', data=df2)
+plt.show()
 
 
 
