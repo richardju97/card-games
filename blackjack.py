@@ -49,7 +49,7 @@ class ProbabilityThresholdBlackJackPlayer(BlackJackPlayer):
     # Hit = 2
     def getMove(self, p):
 #        time.sleep(2)
-        if (p > self._threshold):
+        if (p >= self._threshold):
             return 1 # probability of losing is too great
         else:
             return 2 # probability of losing is less than threshold

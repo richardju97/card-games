@@ -12,6 +12,7 @@ thresholds = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 assert (simbots == len(simtype)), "Declared number of bots must be equal to number of selected bots"
 
 verbose = 0
+numdecks = 4
 
 simnum = 0
 nwins = 0
@@ -28,7 +29,7 @@ for simnum in range(MAX_SIMS):
 #    print(simnum)
     if (verbose):
         print("")
-    mydeck = Deck()
+    mydeck = Deck(numdecks)
     mydeck.shuffle()
     bjgame = BlackJack(1, mydeck)
 
@@ -53,7 +54,8 @@ for simnum in range(MAX_SIMS):
 # ceiling will be higher than it should because we can reduce the entire score by 10    
 
             ceiling = 22 - myplayer.getscore()
-            decksize = 52 - len(myplayer.cards)
+            decksize = numdecks*52 - len(myplayer.cards)
+#            print("mydeck = " + str(len(mydeck)))
             adjust = 0
 
             for mycard in myplayer.cards:
@@ -63,7 +65,7 @@ for simnum in range(MAX_SIMS):
             if (ceiling >= 11):
                 probability = 0
             else:
-                probability = ((13 - ceiling + 1.0) * 4 - adjust) / decksize
+                probability = ((13 - ceiling + 1.0) * (4 * numdecks) - adjust) / decksize
 
             if (verbose):
                 print("Probability of losing: " + str(probability * 100) + "%")
@@ -151,15 +153,18 @@ rates = []
 print("-----------------------------")
 print("Simulation Results")
 for i in range(0, simbots):
-    print("-----------------------------")
+    if (verbose):
+        print("-----------------------------")
 #    print("Bot Type: " + str(simtype[i]))
-    print("Threshold=" + str(thresholds[i]))
-    print("Games Played: " + str(MAX_SIMS))
+    if (verbose):
+        print("Threshold=" + str(thresholds[i]))
+        print("Games Played: " + str(MAX_SIMS))
     w = 0
     t = 0
     l = 0
     s = 0
-    print(results[i])
+    if (verbose):
+        print(results[i])
     for j in range(0, len(results[i])):
         if (results[i][j] > 0):
             w += 1
@@ -178,16 +183,17 @@ for i in range(0, simbots):
     rates.append([winrate, tierate, lossrate, survrate])
 #    lossratio = (1.0 * nloss / len(results[i]))
 #    winrate = 1 - lossratio
-    print("Win Rate: " + str(winrate * 100) + "%")
-    print("Tie Rate: " + str(tierate * 100) + "%")
-    print("Loss Rate: " + str(lossrate * 100) + "%")
-    print("Survival Rate: " + str(survrate * 100) + "%")
-    print("Total Score: " + str(sum[i]))
-    if ((w + t) != 0):
-        print("Average Score: " + str(1.0 * sum[i]/(w+t)))
-    else:
-        print("Average Score: N/A")
-    print("-----------------------------")
+    if (verbose):
+        print("Win Rate: " + str(winrate * 100) + "%")
+        print("Tie Rate: " + str(tierate * 100) + "%")
+        print("Loss Rate: " + str(lossrate * 100) + "%")
+        print("Survival Rate: " + str(survrate * 100) + "%")
+        print("Total Score: " + str(sum[i]))
+        if ((w + t) != 0):
+            print("Average Score: " + str(1.0 * sum[i]/(w+t)))
+        else:
+            print("Average Score: N/A")
+        print("-----------------------------")
 
 for i in range(0, simbots):
     print(str(thresholds[i]) + ": " + str(rates[i]))
