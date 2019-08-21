@@ -145,6 +145,7 @@ class BlackJack(Game):
     # type parameter: 0 = blackjack player , 1 = greedy blackjack player, 2 = probability threshold player,
     # 3 = perceptron, 4 = basic blackjack player
     def newplayer(self, name, type=0, aux=0):
+        """returns an initialized player"""
         self.num_players += 1
 
         if (type == 0):
@@ -166,7 +167,7 @@ class BlackJack(Game):
 
     # Returns true if the dealer does not have a natural 21 else false if the dealer has a natural 21
     def start(self):
-
+        """start the game with dealer and player cards - end game if dealer has natural 21"""
         if (self.verbose):
             for p in self.players:
                 print("Welcome to BlackJack, " + p.name + "!")
@@ -190,6 +191,7 @@ class BlackJack(Game):
 
 
     def startdealer(self):
+        """dealer's turn and returns the dealer's score"""
         if (self.verbose):
             print("The dealer's full hand was: ")
             for card in self.dealer.gethand():
