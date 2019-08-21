@@ -1,9 +1,5 @@
 # dataMain.py
 
-# set up type of bot
-# run each game simulation
-# write results to a csv file
-
 import os, sys
 import csv
 sys.path.append("..")
