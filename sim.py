@@ -3,14 +3,19 @@
 from blackjack import BlackJack
 from card import Deck
 
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+import seaborn as sns
+
 import random
 
-MAX_SIMS = 100
-simbots = 2
-simtype = [1, 2]
+MAX_SIMS = 10000
+simbots = 1
+simtype = [4]
 assert (simbots == len(simtype)), "Declared number of bots must be equal to number of selected bots"
 
-verbose = 1
+verbose = 0
 
 simnum = 0
 nwins = 0
@@ -23,13 +28,49 @@ for i in range(0, simbots):
     sum.append(0)
 print(results)
 
+#Keeps track of all the dealer starting values
+dstart = []
+
+#Keeps track of all the dealer ending values
+dend = []
+
+
+#dictionary keeping track of the value of the card the dealer shows, keeps track of how many times it appears
+d1 = {
+    1 : 0,
+    2 : 0,
+    3 : 0,
+    4 : 0,
+    5 : 0,
+    6 : 0,
+    7 : 0,
+    8 : 0,
+    9 : 0,
+    10 : 0
+}
+
+#dictionary keeping track of the value of the card the dealer shows, keeps track of how many times the dealer busts with starting value of that card
+d2 = {
+    1 : 0,
+    2 : 0,
+    3 : 0,
+    4 : 0,
+    5 : 0,
+    6 : 0,
+    7 : 0,
+    8 : 0,
+    9 : 0,
+    10 : 0
+}
+
+
 for simnum in range(MAX_SIMS):
 #    print(simnum)
     if (verbose):
         print("")
     mydeck = Deck()
     mydeck.shuffle()
-    bjgame = BlackJack(1, mydeck)
+    bjgame = BlackJack(1, mydeck, 0)
 
     myplayers = []
     for i in range(0, simbots):
@@ -93,8 +134,18 @@ for simnum in range(MAX_SIMS):
                 print(mycard)
         i += 1
 
+    dealerfirstcard = bjgame.getdealerfirstcard().getnumber()
+    if (dealerfirstcard > 10):
+        dealerfirstcard = 10
+    dstart.append(dealerfirstcard)
+    d1[dealerfirstcard] = d1[dealerfirstcard] + 1
     dealerscore = bjgame.startdealer()
+    dend.append(dealerscore)
+    if (dealerscore > 21):
+        d2[dealerfirstcard] = d2[dealerfirstcard] + 1
+
 #        print(dealerscore)
+
     i = 0
     for myplayer in myplayers:
 #        if (myplayer.getscore() > 21):
@@ -172,11 +223,39 @@ for i in range(0, simbots):
     else:
         print("Average Score: N/A")
     print("-----------------------------")
+
+    print("Probability the dealer busts given first card value: ")
+
+    bustprobabilities = []
+    for key in d1.keys():
+        print(str(key) + ": " + str(d2[key]/d1[key]))
+        bustprobabilities.append(d2[key]/d1[key])
       
 print("")
 print("-----------------------------")
 print("End Simulation")
 print("-----------------------------")
 print("")
+
+a = np.asarray(bustprobabilities)
+
+df = pd.DataFrame(a, index=[1,2,3,4,5,6,7,8,9,10], columns=['bust probability'])
+print(df)
+
+def helper(value):
+    if (value > 21):
+        return 'bust'
+    else:
+        return 'no bust'
+
+b = [dstart, dend]
+c = np.asarray(b)
+c = np.swapaxes(c,0,1)
+df2 = pd.DataFrame(c, columns = ['dealer starting value', 'dealer ending score'])
+df2['bust outcome'] = df2['dealer ending score'].apply(helper)
+# print(df2)
+sns.countplot(x='dealer starting value', hue='bust outcome', data=df2)
+plt.show()
+
 
 
