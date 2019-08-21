@@ -4,7 +4,8 @@ import random
 from random import seed
 from random import randint
 
-seed(987)
+num = 987
+seed(num)
 
 class Card:
 	suits = ["Clubs", "Diamonds", "Hearts", "Spades"]
@@ -28,6 +29,7 @@ class Card:
 		return str(val) + " of " + self.suit
 
 class Deck:
+	seed = num
 
 	def __init__(self, n=1, s=324):
 		self.deck = []

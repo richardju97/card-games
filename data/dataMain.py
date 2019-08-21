@@ -20,7 +20,8 @@ print("Select type of bot")
 botType = int(input("1. Greedy AI \n2. Probability AI \n3. Perceptron \n4. Basic Strategy \n"))
 botType = 4 #type of bot for each bot
 
-report = open(os.path.join(OUTPUT_FOLDER, "sample.csv"), "a+")
+csvName = helper.csvName(botType, Deck.seed)
+report = open(os.path.join(OUTPUT_FOLDER, csvName), "w+")
 report_writer = csv.writer(report)
 report_writer.writerow(["Dealer First Card", "Player Start Hand", "Dealer End Hand", "Player End Hand", "Dealer Busted", "Player Busted", "Game Result"])
 
