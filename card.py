@@ -4,7 +4,7 @@ import random
 from random import seed
 from random import randint
 
-seed(309)
+seed(987)
 
 class Card:
 	suits = ["Clubs", "Diamonds", "Hearts", "Spades"]
@@ -60,13 +60,13 @@ class Deck:
 
 	def __repr__(self):
 		return "This is a deck of cards!"
-	
+
 	def notempty(self):
 		if(len(self.deck) > 0):
 			return True
 		else:
 			return False
-	
+
 #    def notempty(self):
 #        if(len(self.deck) > 0):
 #            return True
