@@ -10,7 +10,7 @@ import seaborn as sns
 
 import random
 
-MAX_SIMS = 10000
+MAX_SIMS = 100
 simbots = 1 #number of bots in the name
 simtype = [4] #type of bot for each bot
 assert (simbots == len(simtype)), "Declared number of bots must be equal to number of selected bots"
