@@ -11,8 +11,8 @@ import seaborn as sns
 import random
 
 MAX_SIMS = 10000
-simbots = 1
-simtype = [4]
+simbots = 1 #number of bots in the name
+simtype = [4] #type of bot for each bot
 assert (simbots == len(simtype)), "Declared number of bots must be equal to number of selected bots"
 
 verbose = 0
@@ -90,7 +90,7 @@ for simnum in range(MAX_SIMS):
                     print(mycard)
 
 # edge case: what if player holds an ace and a small card
-# ceiling will be higher than it should because we can reduce the entire score by 10    
+# ceiling will be higher than it should because we can reduce the entire score by 10
 
             ceiling = 22 - myplayer.getscore()
             decksize = 52 - len(myplayer.cards)
@@ -230,7 +230,7 @@ for i in range(0, simbots):
     for key in d1.keys():
         print(str(key) + ": " + str(d2[key]/d1[key]))
         bustprobabilities.append(d2[key]/d1[key])
-      
+
 print("")
 print("-----------------------------")
 print("End Simulation")
@@ -256,8 +256,3 @@ df2['bust outcome'] = df2['dealer ending score'].apply(helper)
 # print(df2)
 sns.countplot(x='dealer starting value', hue='bust outcome', data=df2)
 plt.show()
-
-
-
-
-
