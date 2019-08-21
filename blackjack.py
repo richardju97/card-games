@@ -5,6 +5,10 @@ from game import Game
 from card import Deck
 import time
 
+###################################################
+################ Players & Bots ###################
+###################################################
+
 class BlackJackPlayer(Player):
 
     def __init__(self, name):
@@ -30,7 +34,7 @@ class GreedyBlackJackPlayer(BlackJackPlayer):
             return 1 # Stand if greater than 21? (the game will be over by then)
 
 class ProbabilityThresholdBlackJackPlayer(BlackJackPlayer):
-    
+
     def __init__(self, name, t):
         self._threshold = None
         if (t == 0):
@@ -54,7 +58,7 @@ class ProbabilityThresholdBlackJackPlayer(BlackJackPlayer):
         else:
             return 2 # probability of losing is less than threshold
 
-class PerceptronBlackJackPlayer(BlackJackPlayer): 
+class PerceptronBlackJackPlayer(BlackJackPlayer):
 
     threshold =  0.5 # threshold. Max value = 2 if weights are all 1
 
@@ -74,6 +78,7 @@ class PerceptronBlackJackPlayer(BlackJackPlayer):
             return 2 # probability of losing is less than threshold
 
 class BasicBlackJackPlayer(BlackJackPlayer):
+    #source: https://bicyclecards.com/how-to-play/blackjack/?fbclid=IwAR21VaLpNnnYp5r5rDQkKJS-54RE7q-M8L9iMl0qawLGep0X4eR3bRdvC10
     # Stand = 1
     # Hit = 2
     def getMove(self, p, firstcard=0):
@@ -122,13 +127,14 @@ class Dealer(BlackJackPlayer):
     def getfirstcard(self):
         return self.cards[0]
 
-
-
-
+###################################################
+################### The Game ######################
+###################################################
 
 class BlackJack(Game):
 
     def __init__(self, n, d, v=1):
+        """n - num players, d - deck"""
         Game.__init__(self, num_players=n, deck=d)
         self.dealer = Dealer("Dealer") #initializes a dealer for every game.
         for i in range(2): #Adds two cards to dealer's hands
@@ -136,7 +142,7 @@ class BlackJack(Game):
         self.verbose = v
 
 
-    # type parameter: 0 = blackjack player , 1 = greedy blackjack player, 2 = probability threshold player, 
+    # type parameter: 0 = blackjack player , 1 = greedy blackjack player, 2 = probability threshold player,
     # 3 = perceptron, 4 = basic blackjack player
     def newplayer(self, name, type=0, aux=0):
         self.num_players += 1
@@ -179,7 +185,7 @@ class BlackJack(Game):
             if (self.verbose):
                 print("The dealer has a natural 21! Players must also have a natural 21 to tie!")
             return False
-        
+
         return True
 
 
@@ -189,9 +195,9 @@ class BlackJack(Game):
             for card in self.dealer.gethand():
                 print(card)
             print("Dealer score: " + str(self.dealer.getscore()))
-        
+
         playing = True
-        while(playing): # Dealer plays 
+        while(playing): # Dealer plays
             option = self.dealer.getMove(0)
             if (option == 1):
                 self.stand(self.dealer)
@@ -219,7 +225,7 @@ class BlackJack(Game):
             return -1
         elif (self.dealer.getscore() > 21):
             return 1
-        elif (self.dealer.getscore() < playerscore): 
+        elif (self.dealer.getscore() < playerscore):
             return 1
         elif (self.dealer.getscore() == playerscore):
             return 0
@@ -235,15 +241,15 @@ class BlackJack(Game):
         self.calcscores(player, True)
 
     def calcscores(self, player, sort):
-        
+
         hand = player.gethand()
         if (sort):
             hand.sort(key=lambda Card: Card.number, reverse=True)
-        
+
         tempscore = 0
         for i in range(0, len(hand)):
             temp = hand[i].getnumber()
-            
+
             if (temp == 1):
                 if(i == len(hand)-1):
                     if(tempscore + 11 <= 21):
@@ -252,9 +258,9 @@ class BlackJack(Game):
 #                    temp = 1
             elif (temp >= 10):
                 temp = 10
-            
+
             tempscore += temp
-        
+
         player.score = tempscore
 
     def calcallscores(self):
@@ -262,4 +268,3 @@ class BlackJack(Game):
             self.calcscores(p, True)
 
 #    def end(self):
-

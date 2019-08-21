@@ -1,0 +1,15 @@
+DATA TO PLOT:
+
+currently done:
+1. dealer's first card (faced up) vs. number of busts/no busts
+
+to do:
+1. player's start hand vs. player busts/no busts
+2. player's final stay vs. whether or not they win (graph groups by number of win/lose/tie)
+
+big picture:
+- have all data in one table so graph creation is customizable
+
+dataMain.py implementation:
+- user inputs: type of bot
+- output: csv file with stats in data/results folder

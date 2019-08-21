@@ -1,4 +1,8 @@
-# sim.py
+# dataMain.py
+
+# set up type of bot
+# run each game simulation
+# write results to a csv file
 
 from blackjack import BlackJack
 from card import Deck
@@ -9,11 +13,16 @@ import numpy as np
 import seaborn as sns
 
 import random
+import os
 
-MAX_SIMS = 10000
-simbots = 1 #number of bots in the name
-simtype = [4] #type of bot for each bot
-assert (simbots == len(simtype)), "Declared number of bots must be equal to number of selected bots"
+OUTPUT_FOLDER = os.abspath("/results")
+
+MAX_SIMS = 1000
+simbots = 1 #number of bots in the name #TODO: should just be one bot
+print("Select type of bot")
+botType = int(input("1. Greedy AI \n2. Probability AI \n3. Perceptron \n4. Basic Strategy \n"))
+botType = [4] #type of bot for each bot
+# assert (simbots == len(botType)), "Declared number of bots must be equal to number of selected bots"
 
 verbose = 0
 
@@ -23,10 +32,10 @@ nloss = 0
 nties = 0
 sum = []
 results = []
-for i in range(0, simbots):
-    results.append([])
-    sum.append(0)
-print(results)
+# for i in range(0, simbots):
+#     results.append([])
+#     sum.append(0)
+# print(results)
 
 #Keeps track of all the dealer starting values
 dstart = []
@@ -74,7 +83,7 @@ for simnum in range(MAX_SIMS):
 
     myplayers = []
     for i in range(0, simbots):
-        myplayers.append(bjgame.newplayer("Simulation #" + str(simnum+1) + " Bot Type " + str(simtype[i]),simtype[i]))
+        myplayers.append(bjgame.newplayer("Simulation #" + str(simnum+1) + " Bot Type " + str(botType[i]),botType[i]))
 
     bjgame.start()
 
@@ -196,7 +205,7 @@ print("-----------------------------")
 print("Simulation Results")
 for i in range(0, simbots):
     print("-----------------------------")
-    print("Bot Type: " + str(simtype[i]))
+    print("Bot Type: " + str(botType[i]))
     print("Games Played: " + str(MAX_SIMS))
     w = 0
     t = 0
@@ -230,29 +239,3 @@ for i in range(0, simbots):
     for key in d1.keys():
         print(str(key) + ": " + str(d2[key]/d1[key]))
         bustprobabilities.append(d2[key]/d1[key])
-
-print("")
-print("-----------------------------")
-print("End Simulation")
-print("-----------------------------")
-print("")
-
-a = np.asarray(bustprobabilities)
-
-df = pd.DataFrame(a, index=[1,2,3,4,5,6,7,8,9,10], columns=['bust probability'])
-print(df)
-
-def helper(value):
-    if (value > 21):
-        return 'bust'
-    else:
-        return 'no bust'
-
-b = [dstart, dend]
-c = np.asarray(b)
-c = np.swapaxes(c,0,1)
-df2 = pd.DataFrame(c, columns = ['dealer starting value', 'dealer ending score'])
-df2['bust outcome'] = df2['dealer ending score'].apply(helper)
-# print(df2)
-sns.countplot(x='dealer starting value', hue='bust outcome', data=df2)
-plt.show()
