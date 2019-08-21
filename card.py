@@ -1,5 +1,6 @@
 # card.py
 
+import random
 from random import seed
 from random import randint
 
@@ -28,16 +29,23 @@ class Card:
 
 class Deck:
 
-	def __init__(self):
+	def __init__(self, n=1, s=324):
 		self.deck = []
-		for suit in Card.suits:
-			for i in range(1, 14):
-				self.deck.append(Card(i, suit))
-			
+#		seed(324)
+		for d in range(0, n):
+			for suit in Card.suits:
+				for i in range(1, 14):
+					self.deck.append(Card(i, suit))
+#		random.seed(1234)
+#		print("Total Cards = " + str(len(self.deck)))
+
+
 	def shuffle(self):
+#		seed(1837)
 		temp = []
 		while (len(self.deck) > 0):
 			r = randint(0, len(self.deck) -1)
+			print(r)
 			temp.append(self.deck[r])
 			del self.deck[r]
 		self.deck = temp
