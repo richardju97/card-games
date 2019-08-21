@@ -91,7 +91,7 @@ class BasicBlackJackPlayer(BlackJackPlayer):
                 return 1
 
         # Current activiation function is basic threshold function
-        if (firstcard >= 10 or firstcard == 1):
+        if (firstcard >= 7 or firstcard == 1):
             if (self.getscore() < 17):
                 return 2
             else:
