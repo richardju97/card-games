@@ -5,9 +5,10 @@ import os
 
 verbose = 0
 
-def csvName():
-    """return the name for the csv report"""
-    return None
+def csvName(bot, seed):
+    """return the name for the csv report based on the bot and the seed value in card.py"""
+    botsDictionary = {1: "Greedy", 2: "Probability", 3: "Perceptron", 4: "Basic"}
+    return "".join([botsDictionary.get(bot), "_", str(seed), ".csv"])
 
 def play(player, bjgame, dealerFirstCard):
     """play one blackjack game and return the player's end hand, and dealer's end hand"""
