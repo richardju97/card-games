@@ -5,8 +5,8 @@ import os
 import csv
 
 def testBasic(playerScore, dealerScore, playerBusted, dealerBusted, gameResult, line_count):
-    """test the basics of blackjack game win/lose"""
-    testBust = lambda score: True if int(score) > 21 else False
+    """test the basics of blackjack game win/lose. playerScore/dealerScore/line_count are integers, while the rest are strings"""
+    testBust = lambda score: "True" if score > 21 else "False"
     print("player score: " + str(playerScore), ", test bust result: " + str(testBust(playerScore)), ", player busted: " + str(playerBusted))
     print("testBust == playerBusted ? " + str(testBust(playerScore) == playerBusted))
     assert playerBusted == testBust(playerScore), "playerBusted should be " + str(testBust(playerScore)) + " in line " + str(line_count)
@@ -31,7 +31,7 @@ def testBasicStrategyBot(file):
                 dealerBusted = row[4]
                 playerBusted = row[5]
                 gameResult = row[6]
-                testBasic(playerEndHand, dealerEndHand, playerBusted, dealerBusted, gameResult, line_count)
+                testBasic(int(playerEndHand), int(dealerEndHand), playerBusted, dealerBusted, gameResult, line_count)
             line_count += 1
 
 for file in os.listdir(os.getcwd()):
