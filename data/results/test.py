@@ -22,14 +22,20 @@ def testBasicStrategyBot(file):
         for row in csv_reader:
             print("processing row: " + str(row))
             if line_count != 0 and len(row) > 0:
-                dealerFirstCard = row[0]
-                playerStartHand = row[1]
-                dealerEndHand = row[2]
-                playerEndHand = row[3]
-                dealerBusted = row[4]
-                playerBusted = row[5]
+                dealerFirstCard = int(row[0])
+                playerStartHand = int(row[1])
+                dealerEndHand = int(row[2])
+                playerEndHand = int(row[3])
+                dealerBusted = toBool(row[4])
+                playerBusted = toBool(row[5])
                 gameResult = row[6]
-                testGameBasic(int(playerEndHand), int(dealerEndHand), toBool(playerBusted), toBool(dealerBusted), gameResult, line_count)
+                testGameBasic(playerEndHand, dealerEndHand, playerBusted, dealerBusted, gameResult, line_count)
+                if dealerFirstCard >= 7:
+                    assert playerEndHand >= 17, "player end hand should be >= 17, because dealer start card is " + str(dealerFirstCard)
+                elif 4 <= dealerFirstCard <= 6:
+                    assert playerEndHand >= 12, "player end hand should be >= 12, because dealer start card is " + str(dealerFirstCard)
+                elif 1 <= dealerFirstCard <= 2:
+                    assert playerEndHand >= 13, "player end hand should be >= 13, because dealer start card is " + str(dealerFirstCard)
             line_count += 1
 
 for file in os.listdir(os.getcwd()):
