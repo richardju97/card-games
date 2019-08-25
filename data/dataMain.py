@@ -1,9 +1,5 @@
 # dataMain.py
 
-# set up type of bot
-# run each game simulation
-# write results to a csv file
-
 import os, sys
 import csv
 sys.path.append("..")
@@ -18,7 +14,6 @@ NUM_SIMS = 100
 simbots = 1 #number of bots in the name #TODO: should just be one bot
 print("Select type of bot")
 botType = int(input("1. Greedy AI \n2. Probability AI \n3. Perceptron \n4. Basic Strategy \n"))
-botType = 4 #type of bot for each bot
 
 csvName = helper.csvName(botType, Deck.seed)
 report = open(os.path.join(OUTPUT_FOLDER, csvName), "w+")
