@@ -1,0 +1,12 @@
+@import "color-scheme.css";
+
+.simulation-form {
+  margin: 5px;
+  line-height: 1.5em;
+}
+
+.input {
+  margin: 0 8px 0 8px;
+  border-radius: 3px;
+  border: 1px solid var(--theme);
+}

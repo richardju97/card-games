@@ -31,7 +31,7 @@ function Instructions(props) {
       <h2>Bot Descriptions</h2>
       <p>
         <strong>Greedy: </strong>Always hits<br />
-        <strong>Probability: </strong>Based on probability threshold of winning<br />
+        <strong>Probability: </strong>Based on probability of busting<br />
         <strong>Perceptron: </strong>Weighted decision making<br />
         <strong>Basic Strategy: </strong>Based on strategy found <a className='link' href='https://bicyclecards.com/how-to-play/blackjack/?fbclid=IwAR21VaLpNnnYp5r5rDQkKJS-54RE7q-M8L9iMl0qawLGep0X4eR3bRdvC10' target='_blank' rel='noopener noreferrer'>here</a>
       </p>
