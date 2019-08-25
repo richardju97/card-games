@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './views/index.css';
+import Simulation from './simulation.js';
 
 class Home extends React.Component {
   render() {
@@ -8,6 +9,7 @@ class Home extends React.Component {
       <div className='content'>
         <NavBar />
         <Instructions />
+        <Simulation />
       </div>
     );
   }
