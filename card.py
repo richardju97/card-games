@@ -47,7 +47,6 @@ class Deck:
 		temp = []
 		while (len(self.deck) > 0):
 			r = randint(0, len(self.deck) -1)
-			print(r)
 			temp.append(self.deck[r])
 			del self.deck[r]
 		self.deck = temp
