@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import "./views/index.css";
+import './views/index.css';
 
 class Home extends React.Component {
   render() {
@@ -12,10 +12,10 @@ class Home extends React.Component {
 
 function NavBar(props) {
   return (
-    <div class="navbar">
+    <div className='navbar'>
       <h1>Blackjack Bot</h1>
-      <div class="nav-links">
-        <button>View Code</button>
+      <div className='nav-links'>
+        <button><a href='https://github.com/richardju97/card-games' target="_blank" rel="noopener noreferrer">View Code</a></button>
         <button>Authors</button>
       </div>
     </div>
