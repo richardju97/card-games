@@ -13,10 +13,13 @@
   border: 1px solid var(--theme); */
 }
 
-.form-button {
+.form-button, .back-button {
   position: relative;
   left: 40%;
   margin-top: 30px;
+}
+
+.form-button {
   border-color: var(--complement);
   background-color: var(--complement);
   color: white;

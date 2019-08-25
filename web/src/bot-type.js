@@ -14,7 +14,7 @@ class BotType extends React.Component {
           <option value='perceptron'>Perceptron</option>
           <option value='basic strategy'>Basic Strategy</option>
         </select><br />
-        <button className='form-button' onClick={this.props.next}>Next</button>
+        <button className='form-button' onClick={() => this.props.next(1)}>Next</button>
       </div>
     );
   }

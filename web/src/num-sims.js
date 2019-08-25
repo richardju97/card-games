@@ -9,7 +9,8 @@ class NumSims extends React.Component {
       <div className="simulation-form">
         <h3>Enter Number of Simulations</h3>
         <input className='input' type='text' /><br />
-        <button className='form-button' onClick={this.props.next}>Simulate</button>
+        <button className='back-button' onClick={() => this.props.next(-1)}>Back</button>
+        <button className='form-button' onClick={() => this.props.next(1)}>Simulate</button>
       </div>
     );
   }

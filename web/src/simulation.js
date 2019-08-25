@@ -16,8 +16,8 @@ class Simulation extends React.Component {
     }
   }
 
-  updateStep() {
-    this.setState({formStep: this.state.formStep + 1});
+  updateStep(n) {
+    this.setState({formStep: this.state.formStep + n});
   }
 
   render() {
@@ -41,8 +41,8 @@ class ProgressBar extends React.Component {
       <div className='progress-bar'>
         <ul className='steps'>
           <li className='visited'>1</li>
-          <li>2</li>
-          <li>3</li>
+          <li className=''>2</li>
+          <li className=''>3</li>
         </ul>
         <div className='line'></div>
       </div>
