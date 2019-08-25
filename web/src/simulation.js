@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, Link, BrowserRouter as Router, Redirect} from 'react-router-dom';
+// import {Route, Link, BrowserRouter as Router, Redirect} from 'react-router-dom';
 import './views/index.css';
 import './views/simulation.css';
 
@@ -28,7 +28,7 @@ class Simulation extends React.Component {
           <p> Select a type of bot and the number of games to be simulated. </p>
           {this.state.stepMap[this.state.formStep]}
         </div>
-      <ProgressBar />
+      <ProgressBar step={this.state.formStep}/>
       </div>
     );
   }
@@ -36,13 +36,25 @@ class Simulation extends React.Component {
 
 class ProgressBar extends React.Component {
   //tutorial: https://www.youtube.com/watch?v=DYevj6UGNWA
+  constructor(props) {
+    super(props);
+    this.isVisited.bind(this);
+  }
+
+  isVisited(step) {
+    if (this.props.step >= step) {
+      return ' visited';
+    }
+    return '';
+  }
+
   render() {
     return (
       <div className='progress-bar'>
         <ul className='steps'>
-          <li className='visited'>1</li>
-          <li className=''>2</li>
-          <li className=''>3</li>
+          <li className={'step-number' + this.isVisited(1)}>1</li>
+          <li className={'step-number' + this.isVisited(2)}>2</li>
+          <li className={'step-number' + this.isVisited(3)}>3</li>
         </ul>
         <div className='line'></div>
       </div>
