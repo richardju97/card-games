@@ -1,10 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import "./views/index.css";
 
 class Home extends React.Component {
   render() {
-    return <h>Hello world</h>
+    return (
+      <NavBar />
+    );
   }
+}
+
+function NavBar(props) {
+  return (
+    <div class="navbar">
+      <h1>Blackjack Bot</h1>
+      <div class="nav-links">
+        <button>View Code</button>
+        <button>Authors</button>
+      </div>
+    </div>
+  );
 }
 
 ReactDOM.render(
