@@ -9,24 +9,42 @@ class Simulation extends React.Component {
         <div className='paragraph'>
           <h2>Simulation</h2>
           <p> Select a type of bot and the number of games to be simulated. </p>
-          <form className='simulation-form'>
-            Bot Type:
-            <select className='input'>
-              <option value='greedy'>Greedy</option>
-              <option value='probability'>Probability</option>
-              <option value='perceptron'>Perceptron</option>
-              <option value='basic strategy'>Basic Strategy</option>
-            </select>
-            <br />
-
-            Number of simulations:
-            <input className='input' type='text' />
-            <br />
-
-            <button>Simulate</button>
-          </form>
+          <div className='simulation-form'>
+            <BotType />
+            <NumSims />
+          </div>
         </div>
         <ProgressBar />
+      </div>
+    );
+  }
+}
+
+class BotType extends React.Component {
+  render() {
+    return (
+      <div>
+        <h3>Select Bot Type</h3>
+        <select className='input select'>
+          <option value='none'></option>
+          <option value='greedy'>Greedy</option>
+          <option value='probability'>Probability</option>
+          <option value='perceptron'>Perceptron</option>
+          <option value='basic strategy'>Basic Strategy</option>
+        </select><br />
+        <button className='form-button'>Next</button>
+      </div>
+    );
+  }
+}
+
+class NumSims extends React.Component {
+  render() {
+    return (
+      <div>
+        <h3>Enter Number of Simulations</h3>
+        <input className='input' type='text' /><br />
+        <button className='form-button'>Simulate</button>
       </div>
     );
   }

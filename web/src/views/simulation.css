@@ -1,14 +1,31 @@
 @import "color-scheme.css";
 
 .simulation-form {
-  margin: 5px;
   line-height: 1.5em;
+  margin: auto;
+  width: 70%;
+  text-align: center;
 }
 
 .input {
-  margin: 0 8px 0 8px;
-  border-radius: 3px;
-  border: 1px solid var(--theme);
+  margin: 30px;
+  /* border-radius: 3px;
+  border: 1px solid var(--theme); */
+}
+
+.form-button {
+  position: relative;
+  left: 40%;
+  margin-top: 30px;
+  border-color: var(--complement);
+  background-color: var(--complement);
+  color: white;
+}
+
+.form-button:hover {
+  border-color: var(--highlight);
+  background-color: var(--highlight);
+  color: white;
 }
 
 .progress-bar {
@@ -48,4 +65,10 @@
   background-color: var(--light-theme);
   border-color: var(--light-theme);
   color: white;
+}
+
+.select {
+  border: none;
+  border-bottom: 2px solid var(--theme);
+  width: 30%;
 }

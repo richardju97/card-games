@@ -23,6 +23,11 @@ h2 {
   margin-bottom: 10px;
 }
 
+h3 {
+  font-size: 18px;
+  color: var(--theme);
+}
+
 p {
   margin: 5px;
   margin-bottom: 25px;
