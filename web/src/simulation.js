@@ -1,50 +1,34 @@
 import React from 'react';
+import {Route, Link, BrowserRouter as Router, Redirect} from 'react-router-dom';
 import './views/index.css';
 import './views/simulation.css';
 
+import BotType from './bot-type.js';
+import NumSims from './num-sims.js';
+
 class Simulation extends React.Component {
+  constructor(props) {
+    super(props);
+    this.updateStep.bind(this);
+    this.state = {
+      formStep: 1,
+      stepMap: {1: <BotType next={this.updateStep.bind(this)}/>, 2: <NumSims next={this.updateStep.bind(this)}/>},
+    }
+  }
+
+  updateStep() {
+    this.setState({formStep: this.state.formStep + 1});
+  }
+
   render() {
     return (
       <div>
         <div className='paragraph'>
           <h2>Simulation</h2>
           <p> Select a type of bot and the number of games to be simulated. </p>
-          <div className='simulation-form'>
-            <BotType />
-            <NumSims />
-          </div>
+          {this.state.stepMap[this.state.formStep]}
         </div>
-        <ProgressBar />
-      </div>
-    );
-  }
-}
-
-class BotType extends React.Component {
-  render() {
-    return (
-      <div>
-        <h3>Select Bot Type</h3>
-        <select className='input select'>
-          <option value='none'></option>
-          <option value='greedy'>Greedy</option>
-          <option value='probability'>Probability</option>
-          <option value='perceptron'>Perceptron</option>
-          <option value='basic strategy'>Basic Strategy</option>
-        </select><br />
-        <button className='form-button'>Next</button>
-      </div>
-    );
-  }
-}
-
-class NumSims extends React.Component {
-  render() {
-    return (
-      <div>
-        <h3>Enter Number of Simulations</h3>
-        <input className='input' type='text' /><br />
-        <button className='form-button'>Simulate</button>
+      <ProgressBar />
       </div>
     );
   }
