@@ -13,9 +13,14 @@ dataMain.py implementation:
 - output: csv file with stats in data/results folder
 
 
-CLIENT UI
+WEBSITE/CLIENT UI
 
 menu:
 - home
-- directions: about the bot / how to use it 
+- directions: about the bot / how to use it
 - about the authors(?)
+
+home:
+- choose type of bot
+- run x number of simulations
+- display generated graphs
