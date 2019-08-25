@@ -5,6 +5,7 @@ import './views/simulation.css';
 
 import BotType from './bot-type.js';
 import NumSims from './num-sims.js';
+import EndSim from './end-simulation.js';
 
 class Simulation extends React.Component {
   constructor(props) {
@@ -12,7 +13,11 @@ class Simulation extends React.Component {
     this.updateStep.bind(this);
     this.state = {
       formStep: 1,
-      stepMap: {1: <BotType next={this.updateStep.bind(this)}/>, 2: <NumSims next={this.updateStep.bind(this)}/>},
+      stepMap: {
+        1: <BotType next={this.updateStep.bind(this)}/>,
+        2: <NumSims next={this.updateStep.bind(this)}/>,
+        3: <EndSim next={this.updateStep.bind(this)} />,
+      },
     }
   }
 
