@@ -31,8 +31,9 @@ function Instructions(props) {
       <h2>Bot Descriptions</h2>
       <p>
         <strong>Greedy: </strong>Always hits<br />
-        <strong>Probability: </strong>Based on probability of busting<br />
-        <strong>Perceptron: </strong>Weighted decision making<br />
+        <strong>Probability: </strong>Hits if probability of losing (calculated based on player's hand) is below a specified threshold<br />
+        <strong>Perceptron: </strong>A variation of Probability Bot where the probability of losing is calculated based on a linear combination
+                                    of multiple variables such as the dealer's hand and other players' hands<br />
         <strong>Basic Strategy: </strong>Based on strategy found <a className='link' href='https://bicyclecards.com/how-to-play/blackjack/?fbclid=IwAR21VaLpNnnYp5r5rDQkKJS-54RE7q-M8L9iMl0qawLGep0X4eR3bRdvC10' target='_blank' rel='noopener noreferrer'>here</a>
       </p>
     </div>
